@@ -1,0 +1,285 @@
+-- craer database y usarla
+create database ucr_proyectos;
+use ucr_proyectos;
+
+
+-- tablas de la BD
+CREATE TABLE `ucr_proyectos`.`proyectos` (
+  `idProyecto` int NOT NULL primary key,
+  `descripcion` varchar(2500) NOT NULL,
+  `encargado` varchar(100) NOT NULL,
+  `observaciones` mediumtext NOT NULL,
+  `justificacion` mediumtext NOT NULL,
+  `antecedentes` mediumtext NOT NULL,
+  `objetivoGeneral` varchar(150) NOT NULL,
+  `subActividadesSubstantivas` varchar(200) NOT NULL,
+  `metologia` mediumtext NOT NULL,
+  `fechaInicio` date NOT NULL,
+  `fechaFin` date NOT NULL,
+  `fechaRegistro` datetime NOT NULL DEFAULT current_timestamp(),
+  `comentarios` varchar(400) NOT NULL
+);
+
+CREATE TABLE `ucr_proyectos`.`descriptores` (
+`idProyectos` int NOT NULL,
+`idDescriptor` int NOT NULL PRIMARY KEY,
+`descriptor` varchar (200)  NOT NULL);
+
+CREATE TABLE `ucr_proyectos`.`objetivo_especifico` (
+  `idProyecto` INT NOT NULL,
+  `idObjetivoEsp` INT NOT NULL,
+  `objetivo` VARCHAR(300) NULL,
+  PRIMARY KEY (`idObjetivoEsp`));
+  
+  CREATE TABLE `ucr_proyectos`.`metas_objetivos_esp` (
+  `idMeta` INT NOT NULL,
+  `idObjetivoEsp` INT NOT NULL,
+  `meta` VARCHAR(200) NOT NULL,
+  `indicador` VARCHAR(200) NULL,
+  PRIMARY KEY (`idMeta`));
+
+  
+  CREATE TABLE `ucr_proyectos`.`unidades_relacionadas` (
+  `idUnidadR` INT NOT NULL,
+  `idProyecto` INT NOT NULL,
+  `unidad` VARCHAR(200) NOT NULL,
+  `base` TINYINT NOT NULL,
+  PRIMARY KEY (`idUnidadR`));
+  
+  CREATE TABLE `ucr_proyectos`.`entes_externos_re` (
+  `idProyecto` INT NOT NULL,
+  `idEnteExterno` INT NOT NULL,
+  `tipo` VARCHAR(200) NOT NULL,
+  `ente` VARCHAR(200) NOT NULL,
+  PRIMARY KEY (`idEnteExterno`));
+  
+  CREATE TABLE `ucr_proyectos`.`responsables` (
+  `idResponsable` INT NOT NULL,
+  `idProyecto` INT NOT NULL,
+  `responsable` VARCHAR(100) NOT NULL,
+  PRIMARY KEY (`idResponsable`));
+  
+  CREATE TABLE `ucr_proyectos`.`disciplinas` (
+  `idDisciplina` INT NOT NULL,
+  `idProyecto` INT NOT NULL,
+  `disciplina` VARCHAR(300) NOT NULL,
+  PRIMARY KEY (`idDisciplina`));
+  
+  CREATE TABLE `ucr_proyectos`.`proyectos_vinculados` (
+  `idProyectoVinculado` INT NOT NULL,
+  `idProyecto` INT NOT NULL,
+  `proyectoVinculado` INT NOT NULL,
+  PRIMARY KEY (`idProyectoVinculado`));
+  
+  CREATE TABLE `ucr_proyectos`.`programas_adsentos` (
+  `idProgramaAdsento` INT NOT NULL,
+  `idProyecto` INT NOT NULL,
+  `programaAdsento` VARCHAR(200) NOT NULL,
+  PRIMARY KEY (`idProgramaAdsento`));
+
+CREATE TABLE `ucr_proyectos`.`convenios` (
+  `idConvenio` INT NOT NULL,
+  `idProyecto` INT NOT NULL,
+  `convenios` VARCHAR(200) NOT NULL,
+  PRIMARY KEY (`idConvenio`));
+  
+  CREATE TABLE `ucr_proyectos`.`cronograma` (
+  `idCronograma` INT NOT NULL,
+  `idProyecto` INT NOT NULL,
+  `tipo` VARCHAR(50) NOT NULL,
+  `actividad` VARCHAR(200) NOT NULL,
+  `fechaInicio` DATE NOT NULL,
+  `fechaFin` DATE NOT NULL,
+  `descripcion` VARCHAR(300) NOT NULL,
+  PRIMARY KEY (`idCronograma`));
+  
+  CREATE TABLE `ucr_proyectos`.`inscripcion_actividad` (
+  `idInscripcionAc` INT NOT NULL,
+  `idProyecto` INT NOT NULL,
+  `objetivo` VARCHAR(200) NOT NULL,
+  `poblacionBeneficiada` VARCHAR(200) NOT NULL,
+  `cantPoblacion` INT NOT NULL,
+  `facilitadores` VARCHAR(200) NOT NULL,
+  `duracionHoras` INT NOT NULL,
+  `cuentaFinanciamientoExt` VARCHAR(75) NOT NULL,
+  `numeroSesion` INT NOT NULL,
+  PRIMARY KEY (`idInscripcionAc`));
+  
+  CREATE TABLE `ucr_proyectos`.`encargado_actividades` (
+  `idEncargado` INT NOT NULL,
+  `idInscripcionAc` INT NOT NULL,
+  `cedulaEncargado` INT NOT NULL,
+  PRIMARY KEY (`idEncargado`));
+
+CREATE TABLE `ucr_proyectos`.`ubicacion_geografica` (
+  `idUbicacionGeo` INT NOT NULL,
+  `idProyecto` INT NOT NULL,
+  `region` VARCHAR(45) NULL,
+  `provincia` VARCHAR(60) NULL,
+  `canton` VARCHAR(60) NULL,
+  `distrito` VARCHAR(60) NULL,
+  `descripcion` VARCHAR(60) NULL,
+  PRIMARY KEY (`idUbicacionGeo`));
+  
+  CREATE TABLE `ucr_proyectos`.`impactos_y_beneficios` (
+  `idImpacto` INT NOT NULL,
+  `idProyecto` INT NOT NULL,
+  `cantPoblacion` INT NOT NULL,
+  `poblacion` VARCHAR(100) NOT NULL,
+  `beneficioUcr` VARCHAR(300) NOT NULL,
+  `beneficioPoblacion` VARCHAR(300) NOT NULL,
+  PRIMARY KEY (`idImpacto`));
+
+CREATE TABLE `ucr_proyectos`.`area_impacto` (
+  `idArea` INT NOT NULL,
+  `idImpacto` INT NOT NULL,
+  `area` VARCHAR(50) NULL,
+  PRIMARY KEY (`idArea`));
+  
+  CREATE TABLE `ucr_proyectos`.`recursos` (
+  `idRecurso` INT NOT NULL,
+  `idProyecto` INT NOT NULL,
+  `recurso` VARCHAR(100) NOT NULL,
+  PRIMARY KEY (`idRecurso`));
+  
+  CREATE TABLE `ucr_proyectos`.`metrica_evaluacion` (
+  `idMetrica` INT NOT NULL,
+  `idProyecto` INT NULL,
+  `evaluacionProyeecto` VARCHAR(200) NULL,
+  `evaluacionImpacto` VARCHAR(200) NULL,
+  `evaluacionParticipante` VARCHAR(200) NULL,
+  PRIMARY KEY (`idMetrica`));
+  
+  CREATE TABLE `ucr_proyectos`.`anotaciones` (
+  `idAnotacion` INT NOT NULL,
+  `idProyecto` INT NOT NULL,
+  `fecha` DATE NOT NULL,
+  `documento` VARCHAR(300) NOT NULL,
+  `anotacion` VARCHAR(110) NOT NULL,
+  `cedulaUsuario` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idAnotacion`));
+
+CREATE TABLE `ucr_proyectos`.`financiamiento` (
+  `idFinanciamiento` INT NOT NULL,
+  `idProyecto` INT NOT NULL,
+  `tipo` VARCHAR(100) NOT NULL,
+  `descripcion` VARCHAR(200) NOT NULL,
+  `costo` DOUBLE NOT NULL,
+  `titipoCosto` VARCHAR(200) NOT NULL,
+  `justificaFi` VARCHAR(200) NOT NULL,
+  PRIMARY KEY (`idFinanciamiento`));
+
+CREATE TABLE `ucr_proyectos`.`tematica` (
+  `idTematica` INT NOT NULL,
+  `idProyecto` INT NOT NULL,
+  `descripcion` VARCHAR(300) NOT NULL,
+  PRIMARY KEY (`idTematica`));
+  
+  CREATE TABLE `ucr_proyectos`.`modalidades` (
+  `idModalidad` INT NOT NULL,
+  `idProyecto` INT NULL,
+  `descripcion` VARCHAR(200) NULL,
+  PRIMARY KEY (`idModalidad`));
+
+CREATE TABLE `ucr_proyectos`.`usuarios` (
+  `cedula` INT NOT NULL,
+  `nombre` VARCHAR(75) NOT NULL,
+  `apellidos` VARCHAR(75) NOT NULL,
+  `rol` INT NOT NULL,
+  `email` VARCHAR(100) NOT NULL,
+  `password` VARCHAR(32) NOT NULL,
+  `estado` CHAR(1) NOT NULL,
+  `fechaRegistro` DATETIME NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`cedula`));
+  
+  CREATE TABLE `ucr_proyectos`.`rol` (
+  `idRol` INT NOT NULL,
+  `tipoRol` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idRol`));
+  
+COMMIT;
+
+-- integridad referencial
+alter table descriptores add constraint fk_descriptores
+foreign key (idProyectos) references proyectos(idProyecto)
+ON DELETE CASCADE;
+
+alter table objetivo_especifico add constraint fk_objEspecifico
+foreign key (idProyecto) references proyectos(idProyecto) 
+ON DELETE CASCADE;
+
+alter table metas_objetivos_esp add constraint fk_metas_objtivos_esp
+foreign key (idMeta) references objetivo_especifico(idObjetivoEsp) 
+ON DELETE CASCADE;
+
+alter table unidades_relacionadas add constraint fk_unidad_rel
+foreign key (idProyecto) references proyectos(idProyecto) 
+ON DELETE CASCADE;
+
+alter table entes_externos_re add constraint fk_ente_externo
+foreign key (idProyecto) references proyectos(idProyecto)
+ ON DELETE CASCADE;
+
+alter table responsables add constraint fk_responsables
+foreign key (idProyecto) references proyectos(idProyecto) 
+ON DELETE CASCADE;
+
+alter table disciplinas add constraint fk_disciplinas
+foreign key (idProyecto) references proyectos(idProyecto) 
+ON DELETE CASCADE;
+
+alter table proyectos_vinculados add constraint fk_pry_vinculado
+foreign key (idProyecto) references proyectos(idProyecto) 
+ON DELETE CASCADE;
+
+alter table programas_adsentos add constraint fk_programas_adsentos
+foreign key (idProyecto) references proyectos(idProyecto) 
+ON DELETE CASCADE;
+
+alter table convenios add constraint fk_convenios
+foreign key (idProyecto) references proyectos(idProyecto) 
+ON DELETE CASCADE;
+
+alter table cronograma add constraint fk_cronograma
+foreign key (idProyecto) references proyectos(idProyecto) 
+ON DELETE CASCADE;
+
+alter table inscripcion_actividad add constraint fk_inscripcion_actv
+foreign key (idProyecto) references proyectos(idProyecto) ON DELETE CASCADE;
+
+alter table encargado_actividades add constraint fk_encargado_actv
+foreign key (idInscripcionAc) references inscripcion_actividad(idInscripcionAc) ON DELETE CASCADE;
+
+alter table ubicacion_geografica add constraint fk_ubicacion_geo
+foreign key (idProyecto) references proyectos (idProyecto) ON DELETE CASCADE;
+
+alter table impactos_y_beneficios add constraint fk_impact_benef
+foreign key (idProyecto) references proyectos (idProyecto) ON DELETE CASCADE;
+
+alter table area_impacto add constraint fk_area_impct
+foreign key (idImpacto) references impactos_y_beneficios (idImpacto) ON DELETE CASCADE;
+
+alter table recursos add constraint fk_recursos
+foreign key (idProyecto) references proyectos (idProyecto) ON DELETE CASCADE;
+
+alter table metrica_evaluacion add constraint fk_metrica_ev
+foreign key (idProyecto) references proyectos (idProyecto) ON DELETE CASCADE;
+
+alter table anotaciones add constraint fk_anotaciones
+foreign key (idProyecto) references proyectos (idProyecto) ON DELETE CASCADE;
+
+alter table financiamiento add constraint fk_financiamiento
+foreign key (idProyecto) references proyectos (idProyecto) ON DELETE CASCADE;
+
+alter table tematica add constraint fk_tematica
+foreign key (idProyecto) references proyectos (idProyecto) ON DELETE CASCADE;
+
+alter table modalidades add constraint fk_modalidades
+foreign key (idProyecto) references proyectos (idProyecto) ON DELETE CASCADE;
+
+alter table usuarios add constraint fk_rol_user
+foreign key (rol) references rol (idRol) ON DELETE CASCADE;
+
+COMMIT;
+
+
