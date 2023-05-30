@@ -5,19 +5,17 @@ class App {
     function __construct(){
 
        $url = isset($_GET['url']) ? $_GET['url']: null;
-               // if ( vacio) verdadero usa geturl,  sino es null
+               // trae link, si está vacio entonces es null
        $url = rtrim((string) $url, '/');
 
        $url = explode('/', $url);
-
-        // paginas/admin/create/
-        // 0 admin/ 1 create/
+        //separador del link
 
         if(empty($url[0])){
-            $archivoController = 'controller/login.php';
+            $archivoController = 'controller/main.php';
             require_once $archivoController;
-            $controller = new Login();
-            $controller->loadModel('login');
+            $controller = new Main();
+            $controller->loadModel('main');
             $controller->render();
             return false;
         }
@@ -52,7 +50,7 @@ class App {
 
         }
         else{
-            require_once 'controller/error.php';
+            require_once 'controller/errores.php';
             $controller = new Errores();
         }
 

@@ -2,7 +2,7 @@
 class Errores extends Controller{
     function __construct(){
         parent::__construct();
-        $this->view->render('error/errores.php');
+        $this->view->render('error/error.php');
     }
 }
 ?>
