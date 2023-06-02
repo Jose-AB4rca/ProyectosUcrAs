@@ -12,7 +12,7 @@
 <body>
 <nav class="navbar navbar-expand-sm" id="menusPry">
   <div class="container-fluid">
-    <a class="navbar-brand" href="javascript:void(0)">byteSoftaware</a>
+    <a class="navbar-brand" href="javascript:void(0)">byteSoftware</a>
     <button class="navbar-toggler navbar-dark" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
       <span class="navbar-toggler-icon navbar-dark"></span>
     </button>
