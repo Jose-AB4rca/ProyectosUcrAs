@@ -2,15 +2,17 @@
 class Usuarios extends Controller{
     function __construct(){
         parent::__construct(); //constructor de libs/controller
-        $this->view->usuarios = [];
-        $this->view->mensaje = "";
     }
 
     function render(){
        $userlist = $this->model->listUser();
-       $this->view->list = $userList;
-       $this->render('users/lista.php');
+       $this->view->list = $userlist;
+       $this->view->render('main/index');
     }
+    //carga la vista del registro
+    function registro(){
+        $this->view->render('users/agregar');
+     }
 
     function verUser($param = null){
         //la posicion [0] es un identificador
@@ -91,36 +93,36 @@ class Usuarios extends Controller{
     }
 
     function registrarUsuario(){
+        
         $Cedula     = $_POST['Cedula'];        
         $Nombre     = $_POST['Nombre'];
-        $Apellido   = $_POST['Apellido'];
+        $Apellidos   = $_POST['Apellidos'];
         $Rol        = $_POST['Rol'];
         $Email      = $_POST['Email'];
         $Password   = $_POST['Password'];
         $Estado     = $_POST['Estado'];
-        $FechaRegistro = $_POST['FechaRegistro'];
+        //fecha registro auto generada en la BD
 
         $arreglo = [
             'Cedula' => $Cedula,
             'Nombre' => $Nombre,
-            'Apellido' => $Apellido,
+            'Apellidos' => $Apellidos,
             'Rol' => $Rol,
             'Email' => $Email,
             'Password' => $Password,
             'Estado' => $Estado,
-            'FechaRegistro' => $FechaRegistro
         ];
-        $mensaje = "";
-        //var_dump($arreglo);
-        if($this->model->addUsuario($arreglo)){
-            // $mensaje = "<br>";  
-            $mensaje = '<div class="center mt-4 p-1 bg-primary text-white rounded"><h1>Usuario Creado</h1></div>';  
+        if($this->model->addUser($arreglo)){
+            $mjs = "Usuario Creado";  
+            $this->view->mensaje = $mjs;
+            header("Location: http://localhost/ProyectosUcrAs/");
         }else{
-            $mensaje = '<div class="center mt-4 p-1 bg-danger text-white rounded"><h1>Usuario No Creado</h1></div>';  
+            $mjs = "Usuario No Creado";
+            $this->view->mensaje = $mjs;
+            $this->registro();
+            //header("Location: http://localhost/ProyectosUcrAs/usuarios/registro");  
         }
-
-        $this->view->mensaje = $mensaje;
-        $this->render();
+        exit();
               
     }
 }

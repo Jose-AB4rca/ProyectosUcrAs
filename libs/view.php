@@ -11,7 +11,7 @@ class View{
     public $list;
 
     function __construct(){
-      
+
     }
 
     function render($nombre){

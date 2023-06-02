@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="conatiner-fluid min-vh-100 d-flex justify-content-center bg-image" 
+     style="background-image: url('img/white-abstract.jpg');">
+    <div class="row col-sm-4 bg-primary mb-5 mt-4 h-50">
+        <form action="<?php echo constant('URL'); ?>login/autenticar" method="post" style="text-align: center;">
+            <h1 class="mt-3" style="color: white;">Login</h1>
+            <div class="mb-3 mt-3">
+                <label for="email" style="color: white;" class="form-label">Email:</label>
+                <input type="email" class="form-control" id="Email" placeholder="ejemplo@gmail.com" name="Email">
+            </div>
+            <div class="mb-3">
+                <label for="pwd" style="color: white;" class="form-label mt-2">Password:</label>
+                <input type="password" class="form-control" id="Password" placeholder="contraseña" name="Password">
+            </div>
+            <button style="background-color: white;" type="submit" class="btn mt-4 mb-5">Iniciar sesión</button>
+        </form> 
+    </div>
+</div>
+</body>
+</html>

@@ -2,24 +2,21 @@
 
 require_once ('class/usuario.php');  //para la referencia del objeto
     
-class UsuarioModel extends Model{
+class UsuariosModel extends Model{
 
     function __construct(){
         parent::__construct();         //constructor de libs/modelo, nos da la BD.
     }
 
-    public function addUser($data){
-        try{
-            //insert query
-            $sql = $this->db->connect()->prepare('INSERT INTO `usuarios` (`cedula`,`nombre`,`apellidos`,`rol`,`email`,`password`,`estado`,`fechaRegistro`)
-            VALUES (`:Cedula`,`:Nombre`,`:Apellidos`,`:Rol`,`:Email`,`:Password`,`:Estado`,`:FechaRegistro`)');
-            
+    function addUser($data){
+        //insert query
+        $sql = $this->db->connect()->prepare('INSERT INTO `usuarios` (`cedula`,`nombre`,`apellidos`,`rol`,`email`,`password`,`estado`) VALUES (:Cedula,:Nombre,:Apellidos,:Rol,:Email,:Password,:Estado)');
+        try{    
             //ejecutar y mandar confirmación
             $sql->execute($data);
             return true;
-        }catch(PDOExeption $edb){
-            print_r('Error de conexión: ' . $e->getMessage());
-            return false;
+        }catch(PDOException $edb){
+           return false;
         }
     }
 
@@ -81,7 +78,7 @@ class UsuarioModel extends Model{
                 $item->fechaRegistro = $row["fechaRegistro"];
             }
             return $item;
-        }catch(PDOExeption $e){
+        }catch(PDOException $e){
             return [];
         }
     }
