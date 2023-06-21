@@ -23,7 +23,7 @@ class LoginModel extends Model{
                 $item->fechaRegistro = $row["fechaRegistro"];
             }
             return $item;
-        }catch(PDOExeption $e){
+        }catch(PDOException $e){
             return [];
         }
     }

@@ -1,41 +1,52 @@
 <?php
-class Impacto_Beneficios extends Controller{
+class ImpactosBeneficios extends Controller{
     function __construct(){
         parent::__construct(); //constructor de libs/controller
-        $this->view->list = [];
-        $this->view->mensaje = "";
     }
 
     function render(){
         $imp = $this->model->getImpactoB();
         $this->view->list = $imp;
-        $this->view->render('impactosBeneficios/lista.php');
+        $this->view->render('impactosBeneficios/lista');
+    }
+    function listaEspecifica($param = null){
+        $conv = $this->model->getImpactosBPr($param[0]);
+        $this->view->list = $conv;
+        $this->view->render('impactosBeneficios/lista');
+    }
+    function editar($param = null){
+        $obs = $this->model->searchImpactoB($param[0],$_GET['idc']);
+        $this->view->item = $obs;
+        $this->view->render('impactosBeneficios/editar');
+    }
+    function agregar($param = null){
+        $obs = $param[0];
+        $this->view->id = $obs;
+        $this->view->render('impactosBeneficios/agregar');
     }
 
     function verImpactoB($paramA = null){
         $imp = $this->model->searchImpactoB($paramA[0],$paramA[1]);
         $this->view->item = $imp;
-        $this->view->render('impactosBeneficios/ver.php');
+        $this->view->render('impactosBeneficios/ver');
     }
 
     function editarImpactoB(){
-        session_start();
-        $IdImpacto            = $_SESSION['IdImpacto'];
-        $IdProyecto           = $_SESSION['IdProyecto'];
+        $IdImpacto            = $_POST['IdImpacto'];
+        $IdProyecto           = $_POST['IdProyecto'];
         $CantPoblacion        = $_POST['CantPoblacion'];
         $Poblacion            = $_POST['Poblacion'];   
         $BeneficioUcr         = $_POST['BeneficioUcr'];
         $BeneficioPoblacion   = $_POST['BeneficioPoblacion'];
 
         $arreglo = [
-            '$IdImpacto'            => $IdImpacto,
+            'IdImpacto'            => $IdImpacto,
             'IdProyecto'            => $IdProyecto,
             'CantPoblacion'         => $CantPoblacion,
             'Poblacion'             => $Poblacion,
             'BeneficioUcr'          => $BeneficioUcr,
             'BeneficioPoblacion'    => $BeneficioPoblacion
         ];
-        unset_session($_SESSION['IdImpacto'],$_SESSION['IdProyecto']);
 
         if($this->model->updateImpactoB($arreglo)){
             $imp = new ImpactoBeneficio();
@@ -46,25 +57,32 @@ class Impacto_Beneficios extends Controller{
                 $imp->$beneficioUcr         = $BeneficioUcr;
                 $imp->$beneficioPoblacion   = $BeneficioPoblacion; 
 
-            $this->view->item = $imp;
-            $this->view->mensaje = '<div class="center mt-4 p-1 bg-primary text-white rounded"><h1>Registro actualizado</h1></div>';  
+                $mjs = "Actualizado";  
+                header("Location: http://localhost/ProyectosUcrAs/impactosBeneficios/listaEspecifica/".$IdProyecto."?ms=$mjs"); 
+                exit();  
         }else{
-            $this->view->mensaje = '<div class="center mt-4 p-1 bg-danger text-white rounded"><h1>El registro no se actualizó</h1></div>';  
+                $mjs = "No actualizado";  
+                header("Location: http://localhost/ProyectosUcrAs/impactosBeneficios/listaEspecifica/".$IdProyecto."?ms=$mjs"); 
+                exit();  
         }
-        $this->view->render('impactosBeneficios/ver.php');
     }
 
-    function eliminarImpactoB($paramA = null){
-        if($this->model->deleteImpactoB($paramA[0],$paramA[1])){    
-             $mensaje = '<div class="center mt-4 p-1 bg-primary text-white rounded"><h1>Registro eliminado</h1></div>';  
-             $mensaje = "Borrado";
+    function eliminarImpactoB($param = null){
+        $par = explode(',',$param[0]);
+        $sum = count($par);
+        $val = $sum -2;
+        $valOb = $sum -1;
+        $idp = $par[$val];
+        $ido = $par[$valOb];
+        if($this->model->deleteImpactoB($idp,$ido)){    
+            $mjs = "Borrado";  
+            header("Location: http://localhost/ProyectosUcrAs/impactosBeneficios/listaEspecifica/".$idp."?ms=$mjs"); 
+            exit();  
         }else{          
-             $mensaje = '<div class="center mt-4 p-1 bg-danger text-white rounded"><h1>El registro no se logró borrar</h1></div>';  
-             $mensaje = "No Borrado";
+            $mjs = "No borrado";  
+            header("Location: http://localhost/ProyectosUcrAs/impactosBeneficios/listaEspecifica/".$idp."?ms=$mjs"); 
+            exit();  
         }
-
-        echo $mensaje;
-        $this->render();
     }
 
     function agregarImpactoB(){
@@ -76,7 +94,7 @@ class Impacto_Beneficios extends Controller{
         $BeneficioPoblacion   = $_POST['BeneficioPoblacion'];
 
         $arreglo = [
-            '$IdImpacto'            => $IdImpacto,
+            'IdImpacto'            => $IdImpacto,
             'IdProyecto'            => $IdProyecto,
             'CantPoblacion'         => $CantPoblacion,
             'Poblacion'             => $Poblacion,
@@ -85,13 +103,14 @@ class Impacto_Beneficios extends Controller{
         ];
         if($this->model->addImpactoB($arreglo)){
 
-            $this->view->mensaje = '<div class="center mt-4 p-1 bg-primary text-white rounded"><h1>Registro agregado</h1></div>';  
+            $mjs = "Creado";  
+            header("Location: http://localhost/ProyectosUcrAs/impactosBeneficios/listaEspecifica/".$IdProyecto."?ms=$mjs"); 
+            exit();  
         }else{
-            $this->view->mensaje = '<div class="center mt-4 p-1 bg-danger text-white rounded"><h1>Registro no se agregó</h1></div>';  
+            $mjs = "No creado";  
+            header("Location: http://localhost/ProyectosUcrAs/impactosBeneficios/listaEspecifica/".$IdProyecto."?ms=$mjs"); 
+            exit();  
         }
-        $this->render();
-
-
     }
 
 }

@@ -3,15 +3,46 @@ class Proyectos extends Controller{
     function __cosntruct(){
         parent::__construct();
     }
-
+    //--------------- metodos para redirigir a vistas  --------------------
     function render(){
         $pry = $this->model->getProyectos();
         $this->view->list = $pry;
-        $this->view->render('proyectos/lista.php');
+        $this->view->render('proyectos/lista');
    }
+   function registro(){
+        $this->view->render('proyectos/agregar');
+   }
+   function loadList(){
+        include('view/proyectos/loadList.php');
+   }
+    function lista(){
+        $pry = $this->model->getProyectos();
+        $this->view->list = $pry;
+        $this->view->render('proyectos/lista');
+    }
+    function editar($param = null){
+        $pry = $this->model->searchProyecto($param[0]);
+        $this->view->item = $pry;
+        $this->view->mensaje = "";
+        $this->view->render('proyectos/editar');
+    }
+    function opciones($param = null){
+        $pry = $this->model->searchProyecto($param[0]);
+        $this->view->item = $pry;
+        $this->view->mensaje = "";
+        $this->view->render('proyectos/pryOptions');
+    }
+    function ver($param = null){
+        $pry = $this->model->searchProyecto($param[0]);
+        $this->view->item = $pry;
+        $this->view->mensaje = "";
+        $this->view->render('proyectos/ver');
+    }
+    //----------------- fin de metodos para vistas  -----------------------
 
+    //----------------- metodos para transacciones de datos ---------------
    function agregarProyecto(){
-        $IdProyecto                 = $_POST['IdProyecto'];
+        $Titulo                     = $_POST['Titulo'];
         $Descripcion                = $_POST['Descripcion'];
         $Encargado                  = $_POST['Encargado'];
         $Observaciones              = $_POST['Observaciones'];
@@ -19,25 +50,23 @@ class Proyectos extends Controller{
         $Antecedentes               = $_POST['Antecedentes'];
         $ObjetivoGeneral            = $_POST['ObjetivoGeneral'];
         $SubActividadesSubstantivas = $_POST['SubActividadesSubstantivas'];
-        $Metologia                  = $_POST['Metologia'];
+        $Metodologia                = $_POST['Metodologia'];
         $FechaInicio                = $_POST['FechaInicio'];
         $FechaFin                   = $_POST['FechaFin'];
-        $FechaRegistro              = $_POST['FechaRegistro'];
         $Comentarios                = $_POST['Comentarios'];
 
         $arreglo = [
-            'IdProyecto'                 => $IdProyecto,
+            'Titulo'                     => $Titulo,
             'Descripcion'                => $Descripcion,
             'Encargado'                  => $Encargado,
             'Observaciones'              => $Observaciones,
             'Justificacion'              => $Justificacion,
-            'Antecedentes'               => $Antecedentes,
             'ObjetivoGeneral'            => $ObjetivoGeneral,
             'SubActividadesSubstantivas' => $SubActividadesSubstantivas,
-            'Metologia'                  => $Metologia,
+            'Metodologia'                => $Metodologia,
             'FechaInicio'                => $FechaInicio,
             'FechaFin'                   => $FechaFin,
-            'FechaRegistro'              => $FechaRegistro,
+            'Antecedentes'               => $Antecedentes,
             'Comentarios'                => $Comentarios
         ];
 
@@ -51,12 +80,12 @@ class Proyectos extends Controller{
         }
 
         $this->view->mensaje = $mensaje;
-        $this->render();
+        header("Location: http://localhost/ProyectosUcrAs/proyectos/lista");
    }
 
    function editarProyecto(){
-    session_start();
-    $IdProyecto                 = $_SESSION['IdProyecto'];
+    $IdProyecto                 = $_POST['IdProyecto'];
+    $Titulo                     = $_POST['Titulo'];
     $Descripcion                = $_POST['Descripcion'];
     $Encargado                  = $_POST['Encargado'];
     $Observaciones              = $_POST['Observaciones'];
@@ -64,33 +93,32 @@ class Proyectos extends Controller{
     $Antecedentes               = $_POST['Antecedentes'];
     $ObjetivoGeneral            = $_POST['ObjetivoGeneral'];
     $SubActividadesSubstantivas = $_POST['SubActividadesSubstantivas'];
-    $Metologia                  = $_POST['Metologia'];
+    $Metodologia                = $_POST['Metodologia'];
     $FechaInicio                = $_POST['FechaInicio'];
     $FechaFin                   = $_POST['FechaFin'];
-    $FechaRegistro              = $_POST['FechaRegistro'];
     $Comentarios                = $_POST['Comentarios'];
 
     $arreglo = [
-        'IdProyecto'                 => $IdProyecto,
+        'IdProyecto'                => $IdProyecto,
+        'Titulo'                    => $Titulo,
         'Descripcion'                => $Descripcion,
         'Encargado'                  => $Encargado,
         'Observaciones'              => $Observaciones,
         'Justificacion'              => $Justificacion,
-        'Antecedentes'               => $Antecedentes,
         'ObjetivoGeneral'            => $ObjetivoGeneral,
         'SubActividadesSubstantivas' => $SubActividadesSubstantivas,
-        'Metologia'                  => $Metologia,
+        'Metodologia'                => $Metodologia,
         'FechaInicio'                => $FechaInicio,
         'FechaFin'                   => $FechaFin,
-        'FechaRegistro'              => $FechaRegistro,
+        'Antecedentes'               => $Antecedentes,
         'Comentarios'                => $Comentarios
     ];
-    unset_session($_SESSION['IdProyecto']);
 
-    if($this->modelo->updateProyecto($arreglo)){
+    if($this->model->updateProyecto($arreglo)){
        
         $pry = new Proyecto();
         $idProyecto                 = $IdProyecto;
+        $titulo                     = $Titulo;
         $descripcion                = $Descripcion;
         $encargado                  = $Encargado;
         $observaciones              = $Observaciones;
@@ -98,29 +126,27 @@ class Proyectos extends Controller{
         $antecedentes               = $Antecedentes;
         $objetivoGeneral            = $ObjetivoGeneral;
         $subActividadesSubstantivas = $SubActividadesSubstantivas;
-        $metologia                  = $Metologia;
+        $metodologia                = $Metodologia;
         $fechaInicio                = $FechaInicio;
         $fechaFin                   = $FechaFin;
-        $fechaRegistro              = $FechaRegistro;
         $comentarios                = $Comentarios;
 
         $this->view->item = $pry;
-        $mensaje = '<div class="center mt-4 p-1 bg-primary text-white rounded"><h1>Proyecto actualizado</h1></div>';  
+        $mensaje = "Proyecto actualizado";  
     }else{
-        $mensaje = '<div class="center mt-4 p-1 bg-primary text-white rounded"><h1>Proyecto no actualizado</h1></div>';  
+        $mensaje = "Proyecto no actualizado";  
     }
-    $this->view->render('proyectos/ver.php');
+    header("Location: http://localhost/ProyectosUcrAs/proyectos/lista?mss=$mensaje");
 
    }
 
    function verProyecto($param = null){
-    $pry = $this->model->searchProyecto($param[0]);
-    $this->view->item = $pry;
-    $this->view->mensaje = "";
-    $this->view->render('proyectos/ver.php');
+        $pry = $this->model->searchProyecto($param[0]);
+        $this->view->item = $pry;
+        $this->view->mensaje = "";
+        $this->view->render('proyectos/ver.php');
 
    }
-
    function eliminarProyecto($param = null){
         if($this->model->deleteProyecto($param[0])){
             $mensaje = '<div class="center mt-4 p-1 bg-primary text-white rounded"><h1>Proyecto eliminado</h1></div>';  

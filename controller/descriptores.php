@@ -1,15 +1,28 @@
 <?php
-class Descriptores extends Model{
+class Descriptores extends Controller{
     function __construct(){
         parent::__construct();      //constructor de libs/controller
-        $this->view->list = [];
-        $this->view->mensaje = "";
     }
 
     function render(){
         $descrip = $this->model->getDescriptores();
         $this->view->list = $descrip;
         $this->view->render('descriptores/lista.php');
+    }
+    function listaEspecifica($param = null){
+        $conv = $this->model->getDescriptoresPr($param[0]);
+        $this->view->list = $conv;
+        $this->view->render('descriptores/lista');
+    }
+    function editar($param = null){
+        $obs = $this->model->searchDescriptor($param[0],$_GET['idc']);
+        $this->view->item = $obs;
+        $this->view->render('descriptores/editar');
+    }
+    function agregar($param = null){
+        $obs = $param[0];
+        $this->view->id = $obs;
+        $this->view->render('descriptores/agregar');
     }
 
     function verDescriptor($param = null){
@@ -30,55 +43,7 @@ class Descriptores extends Model{
     }
 
     function editarDescriptor(){
-        session_start();
-        $IdProyectos = $_SESSION['IdProyectos'];
-        $IdDescriptor = $_SESSION['IdDescriptor'];
-        $Descriptor  = $_POST['Descriptor'];
-
-
-        $arreglo = [
-            'IdProyectos'     => $IdProyectos,
-            'IdDescriptor'    => $IdDescriptor,
-            'Descriptor'      => $Descriptor
-        ];
- 
-        unset_session($_SESSION['IdProyecto'],$_SESSION['IdDescriptor']);
-
-        if($this->model->updateDescriptor($arreglo)){    
-            $descrip = new Descriptor();      
-
-            $descrip->idProyectos     = $IdProyectos;
-            $descrip->idDescriptor    = $IdDescriptor;
-            $descrip->descriptor      = $Descriptor;
-            
-            $this->view->item = $descrip;
-            $this->view->mensaje = '<div class="center mt-4 p-1 bg-primary text-white rounded"><h1>Registro Actualizado</h1></div>';  
-        }else{          
-            $this->view->mensaje = '<div class="center mt-4 p-1 bg-danger text-white rounded"><h1>Registro no se actualizo</h1></div>';  
-        }
-
-        $this->view->render('descriptor/ver.php');
-
-    }
-
-    function borrarDescriptor($param = null){
-        $idp = $param[0];
-        $idc = $param[1];
-      
-        if($this->model->deleteCronograma($idc,$idp)){    
-             $mensaje = '<div class="center mt-4 p-1 bg-primary text-white rounded"><h1>Registro eliminado</h1></div>';  
-             $mensaje = "Borrado";
-        }else{          
-             $mensaje = '<div class="center mt-4 p-1 bg-danger text-white rounded"><h1>No se logro borrar</h1></div>';  
-             $mensaje = "No Borrado";
-        }
-
-        echo $mensaje;
-        $this->render();
-    }
-
-    function agregarDescriptor(){
-        $IdProyectos = $_POST['IdProyectos'];
+        $IdProyectos = $_POST['IdProyecto'];
         $IdDescriptor = $_POST['IdDescriptor'];
         $Descriptor  = $_POST['Descriptor'];
 
@@ -89,14 +54,64 @@ class Descriptores extends Model{
             'Descriptor'      => $Descriptor
         ];
 
-        if($this->model->addDescriptor($arreglo)){
-        
-            $mensaje = '<div class="center mt-4 p-1 bg-primary text-white rounded"><h1>Registro creada</h1></div>';  
-        }else{
-            $mensaje = '<div class="center mt-4 p-1 bg-danger text-white rounded"><h1>Registro no creado</h1></div>';  
+        if($this->model->updateDescriptor($arreglo)){    
+            $descrip = new Descriptor();      
+
+            $descrip->idProyectos     = $IdProyectos;
+            $descrip->idDescriptor    = $IdDescriptor;
+            $descrip->descriptor      = $Descriptor;
+            
+            $mjs = "Editado";  
+            header("Location: http://localhost/ProyectosUcrAs/descriptores/listaEspecifica/".$IdProyectos."?ms=$mjs"); 
+            exit();  
+        }else{          
+            $mjs = "No editado";  
+            header("Location: http://localhost/ProyectosUcrAs/descriptores/listaEspecifica/".$IdProyectos."?ms=$mjs"); 
+            exit();  
         }
-        $this->view->mensaje = $mensaje;
-        $this->render();
+
+    }
+
+    function borrarDescriptor($param = null){
+        $par = explode(',',$param[0]);
+        $sum = count($par);
+        $val = $sum -2;
+        $valOb = $sum -1;
+        $idp = $par[$val];
+        $ido = $par[$valOb];
+      
+        if($this->model->deleteCronograma($idp,$ido)){    
+            $mjs = "Borrado";  
+            header("Location: http://localhost/ProyectosUcrAs/descriptores/listaEspecifica/".$idp."?ms=$mjs"); 
+            exit();  
+        }else{          
+            $mjs = "No borrado";  
+            header("Location: http://localhost/ProyectosUcrAs/descriptores/listaEspecifica/".$idp."?ms=$mjs"); 
+            exit();  
+        }
+    }
+
+    function agregarDescriptor(){
+        $IdProyectos = $_POST['IdProyecto'];
+        $IdDescriptor = $_POST['IdDescriptor'];
+        $Descriptor  = $_POST['Descriptor'];
+
+
+        $arreglo = [
+            'IdProyecto'     => $IdProyectos,
+            'IdDescriptor'    => $IdDescriptor,
+            'Descriptor'      => $Descriptor
+        ];
+
+        if($this->model->addDescriptor($arreglo)){
+            $mjs = "Agregado";  
+            header("Location: http://localhost/ProyectosUcrAs/descriptores/listaEspecifica/".$IdProyectos."?ms=$mjs"); 
+            exit();  
+        }else{
+            $mjs = "No agregado";  
+            header("Location: http://localhost/ProyectosUcrAs/descriptores/listaEspecifica/".$IdProyectos."?ms=$mjs"); 
+            exit();  
+        }
     }   
 
 }

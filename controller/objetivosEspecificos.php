@@ -5,32 +5,49 @@ class ObjetivosEspecificos extends Controller{
         $this->view->list = [];
         $this->view->mensaje = "";
     }
-
+    // metodos para dar a view datos y cargar vistas
     function render(){
-        $obs = $this->model->getObjetivoEsp();
+        $obs = $this->model->getObjetivosEsp();
         $this->view->list = $obs;
-        $this->view->render('objetivoEsp/lista.php');
+        $this->view->render('objetivoEsp/lista');
+    }
+    function listaGeneral(){
+        $obs = $this->model->getObjetivosEsp();
+        $this->view->list = $obs;
+        $this->view->render('objetivoEsp/lista');
+    }
+    function listaEspecifica($param = null){
+        $obs = $this->model->getPryObjetivosEsp($param[0]);
+        $this->view->list = $obs;
+        $this->view->render('objetivoEsp/lista');
+    }
+    function agregar($param = null){
+        $obs = $param[0];
+        $this->view->id = $obs;
+        $this->view->render('objetivoEsp/agregar');
+    }
+    function edit($param = null){
+        $obs = $this->model->searchObjetivoEsp($param[0],$_GET['idc']);
+        $this->view->item = $obs;
+        $this->view->render('objetivoEsp/editar');
     }
 
     function verObjetivoEsp($paramA = null){
         $obs = $this->model->searchObjetivoEsp($paramA[0],$paramA[1]);
         $this->view->item = $obs;
-        $this->view->render('objetivoEsp/ver.php');
+        $this->view->render('objetivoEsp/ver');
     }
-
+    //metodos pare transacciones de datos
     function editarObjetivoEsp(){
-        session_start();
-        $IdProyecto     = $_SESSION['IdProyecto'];
-        $IdObjetivoEsp  = $_SESSION['IdObjetivoEsp'];
+        $IdProyecto     = $_POST['IdProyecto'];
+        $IdObjetivoEsp  = $_POST['IdObjetivoEsp'];
         $Objetivo       = $_POST['Objetivo'];
-
 
         $arreglo = [
             'IdProyecto'     => $IdProyecto,
             'IdObjetivoEsp'           => $IdObjetivoEsp,
             'Objetivo'       => $Objetivo 
         ];
-        unset_session($_SESSION['IdProyecto'],$_SESSION['IdObjetivoEsp']);
 
         if($this->model->updateObjetivoEsp($arreglo)){
             $pg = new ObjetivoEspecifico();
@@ -38,22 +55,29 @@ class ObjetivosEspecificos extends Controller{
             $pg->idObjetivoEsp      = $IdObjetivoEsp;
             $pg->$objetivo          = $Objetivo; 
 
-            $this->view->item = $pg;
-            $this->view->mensaje = '<div class="center mt-4 p-1 bg-primary text-white rounded"><h1>Registro actualizado</h1></div>';  
+            $mjs = "Actualizado";  
+            header("Location: http://localhost/ProyectosUcrAs/objetivosEspecificos/listaEspecifica/".$IdProyecto."?ms=$mjs"); 
         }else{
-            $this->view->mensaje = '<div class="center mt-4 p-1 bg-danger text-white rounded"><h1>Registro no se actualizó</h1></div>';  
+            $mjs = "No actualizado";  
+            header("Location: http://localhost/ProyectosUcrAs/objetivosEspecificos/listaEspecifica/".$IdProyecto."?ms=$mjs"); 
         }
-        $this->view->render('objetivoEsp/ver.php');
     }
 
-    function eliminarObjetoEsp($paramA = null){
-        $id = $paramA[0];
-        if($this->model->deleteObjeticoEsp($paramA[0],$paramA[1])){    
-             $mensaje = '<div class="center mt-4 p-1 bg-primary text-white rounded"><h1>Registro eliminado</h1></div>';  
-             $mensaje = "Borrado";
+    function eliminarObjetivoEsp($paramA = null){
+        $par = explode(',',$paramA[0]);
+        
+        $sum = count($par);
+        $val = $sum -2;
+        $valOb = $sum -1;
+        $idp = $par[$val];
+        $ido = $par[$valOb];
+        //var_dump($id);
+        if($this->model->deleteObjetivoEsp($idp,$ido)){    
+            $mjs = "Objetivo borrado";  
+            header("Location: http://localhost/ProyectosUcrAs/objetivosEspecificos/listaEspecifica/".$idp."?ms=$mjs"); 
         }else{          
-             $mensaje = '<div class="center mt-4 p-1 bg-danger text-white rounded"><h1>Registro no se logró borrar</h1></div>';  
-             $mensaje = "No Borrado";
+            $mjs = "No borrado";  
+            header("Location: http://localhost/ProyectosUcrAs/objetivosEspecificos/listaEspecifica/".$idp."?ms=$mjs"); 
         }
 
         echo $mensaje;
@@ -73,14 +97,13 @@ class ObjetivosEspecificos extends Controller{
         ];
 
         if($this->model->addObjetivoEsp($arreglo)){
-
-            $this->view->mensaje = '<div class="center mt-4 p-1 bg-primary text-white rounded"><h1>Registro añadida</h1></div>';  
+            $mjs = "Objetivo creado";  
+            header("Location: http://localhost/ProyectosUcrAs/objetivosEspecificos/listaEspecifica/".$IdProyecto."?ms=$mjs"); 
         }else{
-            $this->view->mensaje = '<div class="center mt-4 p-1 bg-danger text-white rounded"><h1>Registro no se agregó</h1></div>';  
+            $mjs = "Objetivo no creado";  
+            header("Location: http://localhost/ProyectosUcrAs/objetivosEspecificos/listaEspecifica/".$IdProyecto."?ms=$mjs"); 
         }
-        $this->render();
-
-
+        
     }
 
 }

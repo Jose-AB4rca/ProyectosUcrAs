@@ -16,9 +16,11 @@ class Login extends Controller{
 
         $user = $this->model->AuthUser($arreglo);
         if(isset($user->cedula)){
+             session_name($user->cedula);
              session_start();
              $_SESSION['cedula'] = $user->cedula;
              $_SESSION['NameUser'] = $user->nombre;
+             $_SESSION['Rol'] = $user->rol;
              $_SESSION['acceso'] = true;
              header("Location: http://localhost/ProyectosUcrAs/");
              exit();
@@ -38,6 +40,7 @@ class Login extends Controller{
         $_SESSION['acceso'] = false;
         $_SESSION['cedula'] = null;
         $_SESSION['NameUser'] = null;
+        $_SESSION['Rol'] = null;
         session_destroy();
         header("Location: http://localhost/ProyectosUcrAs/");
 

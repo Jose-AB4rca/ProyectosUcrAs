@@ -5,11 +5,26 @@ class Disciplinas extends Controller{
         $this->view->list = [];
         $this->view->mensaje = "";
     }
-
+    //metodos para cargar y pasar los datos a las vistas.
     function render($param = null){
         $dsp = $this->model->getDisciplinas();
         $this->view->list = $dsp;
         $this->view->render('disciplinas/lista.php');
+    }
+    function listaEspecifica($param = null){
+        $conv = $this->model->getDisciplinasPr($param[0]);
+        $this->view->list = $conv;
+        $this->view->render('disciplinas/lista');
+    }
+    function editar($param = null){
+        $obs = $this->model->searchDisciplina($param[0],$_GET['idc']);
+        $this->view->item = $obs;
+        $this->view->render('disciplinas/editar');
+    }
+    function agregar($param = null){
+        $obs = $param[0];
+        $this->view->id = $obs;
+        $this->view->render('disciplinas/agregar');
     }
 
     function verDisciplina($param = null){
@@ -30,9 +45,8 @@ class Disciplinas extends Controller{
     }
 
     function editarDisciplina(){
-        session_start();
-        $IdDisciplina   = $_SESSION['IdDisciplina'];
-        $IdProyecto     = $_SESSION['IdProyecto '];
+        $IdDisciplina   = $_POST['IdDisciplina'];
+        $IdProyecto     = $_POST['IdProyecto'];
         $Disciplina     = $_POST['Disciplina'];
 
 
@@ -42,43 +56,45 @@ class Disciplinas extends Controller{
             'Disciplina'      => $Disciplina
         ];
  
-        unset_session($_SESSION['IdProyecto'],$_SESSION['IdDisciplina']);
-
         if($this->model->updateDisciplina($arreglo)){    
             $dis = new Disciplina();      
             $dis->idDisciplina     = $IdProyecto;
             $dis->idProyecto     = $IdProyecto;
             $dis->disciplina      = $Disciplina;
             
-            $this->view->item = $dis;
-            $this->view->mensaje = '<div class="center mt-4 p-1 bg-primary text-white rounded"><h1>Registro Actualizado</h1></div>';  
+            $mjs = "Editado";  
+            header("Location: http://localhost/ProyectosUcrAs/disciplinas/listaEspecifica/".$IdProyecto."?ms=$mjs"); 
+            exit();  
         }else{          
-            $this->view->mensaje = '<div class="center mt-4 p-1 bg-danger text-white rounded"><h1>Registro no se actualizo</h1></div>';  
+            $mjs = "No editado";  
+            header("Location: http://localhost/ProyectosUcrAs/disciplinas/listaEspecifica/".$IdProyecto."?ms=$mjs"); 
+            exit();  
         }
-
-        $this->view->render('disciplina/ver.php');
-
     }
 
     function borrarDisciplina($param = null){
-        $idp = $param[0];
-        $idc = $param[1];
+        $par = explode(',',$param[0]);
+        $sum = count($par);
+        $val = $sum -2;
+        $valOb = $sum -1;
+        $idp = $par[$val];
+        $ido = $par[$valOb];
       
-        if($this->model->deleteDisciplina($idp,$idc)){    
-             $mensaje = '<div class="center mt-4 p-1 bg-primary text-white rounded"><h1>Registro eliminado</h1></div>';  
-             $mensaje = "Borrado";
+      
+        if($this->model->deleteDisciplina($idp,$ido)){    
+            $mjs = "Borrado";  
+            header("Location: http://localhost/ProyectosUcrAs/disciplinas/listaEspecifica/".$idp."?ms=$mjs"); 
+            exit();  
         }else{          
-             $mensaje = '<div class="center mt-4 p-1 bg-danger text-white rounded"><h1>No se logro borrar</h1></div>';  
-             $mensaje = "No Borrado";
+            $mjs = "No borrado";  
+            header("Location: http://localhost/ProyectosUcrAs/disciplinas/listaEspecifica/".$idp."?ms=$mjs"); 
+            exit();  
         }
-
-        echo $mensaje;
-        $this->render();
     }
 
     function agregarDisciplina(){
         $IdDisciplina   = $_POST['IdDisciplina'];
-        $IdProyecto     = $_POST['IdProyecto '];
+        $IdProyecto     = $_POST['IdProyecto'];
         $Disciplina     = $_POST['Disciplina'];
 
 
@@ -89,13 +105,15 @@ class Disciplinas extends Controller{
         ];
 
         if($this->model->addDisciplina($arreglo)){
-        
-            $mensaje = '<div class="center mt-4 p-1 bg-primary text-white rounded"><h1>Registro creada</h1></div>';  
+            $mjs = "Agregado";  
+            header("Location: http://localhost/ProyectosUcrAs/disciplinas/listaEspecifica/".$IdProyecto."?ms=$mjs"); 
+            exit();  
         }else{
-            $mensaje = '<div class="center mt-4 p-1 bg-danger text-white rounded"><h1>Registro no creado</h1></div>';  
+            $mjs = "No añadido";  
+            header("Location: http://localhost/ProyectosUcrAs/disciplinas/listaEspecifica/".$IdProyecto."?ms=$mjs"); 
+            exit();  
         }
-        $this->view->mensaje = $mensaje;
-        $this->render();
+
     }   
 
     

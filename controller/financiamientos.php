@@ -2,14 +2,27 @@
 class Financiamientos extends Controller{
     function __construct(){
         parent::__construct();      //constructor de libs/controller
-        $this->view->list = [];
-        $this->view->mensaje = "";
     }
 
     function render($param = null){
         $fin = $this->model->getFinanciamientos();
         $this->view->list = $fin;
         $this->view->render('financiamientos/lista.php');
+    }
+    function listaEspecifica($param = null){
+        $conv = $this->model->getfinanciamientosPr($param[0]);
+        $this->view->list = $conv;
+        $this->view->render('financiamientos/lista');
+    }
+    function editar($param = null){
+        $obs = $this->model->searchFinanciamiento($param[0],$_GET['idc']);
+        $this->view->item = $obs;
+        $this->view->render('financiamientos/editar');
+    }
+    function agregar($param = null){
+        $obs = $param[0];
+        $this->view->id = $obs;
+        $this->view->render('financiamientos/agregar');
     }
 
     function verFinanciamiento($param = null){
@@ -29,63 +42,6 @@ class Financiamientos extends Controller{
     }
 
     function editarFinanciamiento(){
-        session_start();
-        $IdFinanciamiento   =$_SESSION['IdFinanciamiento'];
-        $IdProyecto         =$_SESSION['IdProyecto'];
-        $Tipo               =$_POST['Tipo'];  
-        $Descripcion        =$_POST['Descripcion'];
-        $Costo              =$_POST['Costo'];
-        $TipoCosto          =$_POST['TipoCosto '];
-        $JustificaFi        =$_POST['JustificaFi'];
-
-        $arreglo = [
-            'IdFinanciamiento' => $IdFinanciamiento,
-            'IdProyecto'       => $IdProyecto,
-            'Tipo'             => $Tipo,
-            'Descripcion'      => $Descripcion,
-            'Costo'            => $Costo,
-            'TipoCosto'        => $TipoCosto,
-            'JustificaFi'      => $JustificaFi
-        ];
-
-        unset_session($_SESSION['IdFinanciamiento'],$_SESSION['IdProyecto']);
-
-        if($this->model->updateFinanciamiento($arreglo)){    
-            $financia = new Financiamiento();      
-
-            $financia->idFinanciamiento = $IdFinanciamiento;
-            $financia->idProyecto       = $IdProyecto;
-            $financia->tipo             = $Tipo;
-            $financia->descripcion      = $Descripcion;
-            $financia->costo            = $Costo;
-            $financia->tipoCosto        = $TipoCosto;
-            $financia->justificaFi      = $JustificaFi;
-            
-            $this->view->item = $financia;
-            $this->view->mensaje = '<div class="center mt-4 p-1 bg-primary text-white rounded"><h1>Registro Actualizado</h1></div>';  
-        }else{          
-            $this->view->mensaje = '<div class="center mt-4 p-1 bg-danger text-white rounded"><h1>Registro no se actualizo</h1></div>';  
-        }
-
-        $this->view->render('financiamientos/ver.php');
-
-    }
-
-    function borrarFinanciamiento($param = null){
-      
-        if($this->model->deleteFinanciamiento($param[0],$param[1])){    
-             $mensaje = '<div class="center mt-4 p-1 bg-primary text-white rounded"><h1>Registro eliminado</h1></div>';  
-             $mensaje = "Borrado";
-        }else{          
-             $mensaje = '<div class="center mt-4 p-1 bg-danger text-white rounded"><h1>No se logro borrar</h1></div>';  
-             $mensaje = "No Borrado";
-        }
-
-        echo $mensaje;
-        $this->render();
-    }
-
-    function agregarFinanciamiento(){
         $IdFinanciamiento   =$_POST['IdFinanciamiento'];
         $IdProyecto         =$_POST['IdProyecto'];
         $Tipo               =$_POST['Tipo'];  
@@ -104,14 +60,74 @@ class Financiamientos extends Controller{
             'JustificaFi'      => $JustificaFi
         ];
 
-        if($this->model->addFinanciamineto($arreglo)){
-        
-            $mensaje = '<div class="center mt-4 p-1 bg-primary text-white rounded"><h1>Registro creada</h1></div>';  
-        }else{
-            $mensaje = '<div class="center mt-4 p-1 bg-danger text-white rounded"><h1>Registro no creado</h1></div>';  
+        if($this->model->updateFinanciamiento($arreglo)){    
+            $financia = new Financiamiento();      
+
+            $financia->idFinanciamiento = $IdFinanciamiento;
+            $financia->idProyecto       = $IdProyecto;
+            $financia->tipo             = $Tipo;
+            $financia->descripcion      = $Descripcion;
+            $financia->costo            = $Costo;
+            $financia->tipoCosto        = $TipoCosto;
+            $financia->justificaFi      = $JustificaFi;
+            
+            $mjs = "Actualizado";  
+            header("Location: http://localhost/ProyectosUcrAs/financiamientos/listaEspecifica/".$IdProyecto."?ms=$mjs"); 
+            exit();  
+        }else{          
+            $mjs = "No cambiado";  
+            header("Location: http://localhost/ProyectosUcrAs/financiamientos/listaEspecifica/".$IdProyecto."?ms=$mjs"); 
+            exit();  
         }
-        $this->view->mensaje = $mensaje;
-        $this->render();
+    }
+
+    function borrarFinanciamiento($param = null){
+        $par = explode(',',$param[0]);
+        $sum = count($par);
+        $val = $sum -2;
+        $valOb = $sum -1;
+        $idp = $par[$val];
+        $ido = $par[$valOb];
+        if($this->model->deleteFinanciamiento($idp,$ido)){    
+            $mjs = "Actualizado";  
+            header("Location: http://localhost/ProyectosUcrAs/financiamientos/listaEspecifica/".$idp."?ms=$mjs"); 
+            exit();  
+        }else{          
+            $mjs = "Actualizado";  
+            header("Location: http://localhost/ProyectosUcrAs/financiamientos/listaEspecifica/".$idp."?ms=$mjs"); 
+            exit();  
+        }
+    }
+
+    function agregarFinanciamiento(){
+        $IdFinanciamiento   =$_POST['IdFinanciamiento'];
+        $IdProyecto         =$_POST['IdProyecto'];
+        $Tipo               =$_POST['Tipo'];  
+        $Descripcion        =$_POST['Descripcion'];
+        $Costo              =$_POST['Costo'];
+        $TipoCosto          =$_POST['TipoCosto'];
+        $JustificaFi        =$_POST['JustificaFi'];
+
+        $arreglo = [
+            'IdFinanciamiento' => $IdFinanciamiento,
+            'IdProyecto'       => $IdProyecto,
+            'Tipo'             => $Tipo,
+            'Descripcion'      => $Descripcion,
+            'Costo'            => $Costo,
+            'TipoCosto'        => $TipoCosto,
+            'JustificaFi'      => $JustificaFi
+        ];
+
+        if($this->model->addFinanciamiento($arreglo)){
+        
+            $mjs = "Agregado";  
+            header("Location: http://localhost/ProyectosUcrAs/financiamientos/listaEspecifica/".$IdProyecto."?ms=$mjs"); 
+            exit();  
+        }else{
+            $mjs = "No creado";  
+            header("Location: http://localhost/ProyectosUcrAs/financiamientos/listaEspecifica/".$IdProyecto."?ms=$mjs"); 
+            exit();  
+        }
     }    
 }
 ?>

@@ -2,37 +2,38 @@
 class Anotaciones extends Controller{
     function __construct(){
         parent::__construct(); //constructor de libs/controller
-        $this->view->list = [];
-        $this->view->mensaje = "";
     }
 
     //lista de objetos
-    function render($param = null){
+    function render(){
         $anotaciones = $this->model->getAnotaciones();
         $this->view->list = $anotaciones;
-        $this->view->render('anotaciones/lista.php');
+        $this->view->render('anotaciones/lista');
     }
-    //ver un objeto especifico
-    function verAnotacion($param = null){
-        //la posicion [0] es un identificador
-        $idAn= $param[0];
-        $idAnB= $param[1];
-        $annotacion = $this->model->searchAnotacion($idAnt,$idAntB);
-
-        //session_start();
-        //$_SESSION['idAn'] = $idAn;
-
-        //pasa a la view los datos
-        $this->view->item = $annotacion;
-        $this->view->mensaje = "";
-        $this->view->render('anotaciones/ver.php');
-
+    function listaEspecifica($param = null){
+        $anotaciones = $this->model->getAnotacionesProyecto($param[0]);
+        $this->view->list = $anotaciones;
+        $this->view->render('anotaciones/lista');
     }
+    function editar($param = null){
+        $obs = $this->model->searchAnotacion($param[0],$_GET['idc']);
+        $this->view->item = $obs;
+        $this->view->render('anotaciones/editar');
+    }
+    function agregar($param = null){
+        $obs = $param[0];
+        $this->view->id = $obs;
+        $this->view->render('anotaciones/agregar');
+    }
+
+
+
+
+
 
     function editarAnotacion(){
-        session_start();
-        $IdAnotacion   = $_SESSION['IdAnotacion'];
-        $IdProyecto    = $_SESSION['IdProyecto'];
+        $IdAnotacion   = $_POST['IdAnotacion'];
+        $IdProyecto    = $_POST['IdProyecto'];
         $Documento     = $_POST['Documento'];
         $Anotacion     = $_POST['Anotacion'];
         $CedulaUsuario = $_POST['CedulaUsuario'];
@@ -44,8 +45,6 @@ class Anotaciones extends Controller{
             'Anotacion' => $Anotacion,
             'CedulaUsuario' => $CedulaUsuario
         ];
-
-        unset_session($_SESSION['idAnotacion'],$_SESSION['idProyecto']);
 
         if($this->model->updateAnotacion($arreglo)){    
             $ant = new Anotacion();      
@@ -56,35 +55,38 @@ class Anotaciones extends Controller{
             $ant->anotacion     = $Anotacion;
             $ant->cedulaUsuario = $$CedulaUsuario;
             
-            $this->view->item = $ant;
-            $this->view->mensaje = '<div class="center mt-4 p-1 bg-primary text-white rounded"><h1>Anotación actualizado</h1></div>';  
+            $mjs = "Editado";  
+            header("Location: http://localhost/ProyectosUcrAs/anotaciones/listaEspecifica/".$IdProyecto."?ms=$mjs"); 
         }else{          
-            $this->view->mensaje = '<div class="center mt-4 p-1 bg-danger text-white rounded"><h1>Anotación no actualizada</h1></div>';  
+            $mjs = "No editado";  
+            header("Location: http://localhost/ProyectosUcrAs/anotaciones/listaEspecifica/".$IdProyecto."?ms=$mjs"); 
         }
-
-        $this->view->render('anotaciones/ver.php');
-
+        //$this->view->render('anotaciones/ver.php');
     }
 
     function borrarAnotacion($param = null){
-        $idAnt = $param[0];
-        $idAntB = $param[1];
+        $par = explode(',',$param[0]);
+        $sum = count($par);
+        $val = $sum -2;
+        $valOb = $sum -1;
+        $idp = $par[$val];
+        $ido = $par[$valOb];
+        //var_dump($par);
       
-        if($this->model->deleteAnotacion($idAnt,$idAntB)){    
-             $mensaje = '<div class="center mt-4 p-1 bg-primary text-white rounded"><h1>Anotación eliminada con ID: '.$idAntB.'</h1></div>';  
-             $mensaje = "Borrado";
+        if($this->model->deleteAnotacion($idp,$ido)){    
+            $mjs = "Borrado";  
+            header("Location: http://localhost/ProyectosUcrAs/anotaciones/listaEspecifica/".$idp."?ms=$mjs"); 
+            var_dump($par);
         }else{          
-             $mensaje = '<div class="center mt-4 p-1 bg-danger text-white rounded"><h1>Anotación no se logro borrar</h1></div>';  
-             $mensaje = "No Borrado";
+            $mjs = "No borrado";  
+            header("Location: http://localhost/ProyectosUcrAs/anotaciones/listaEspecifica/".$idp."?ms=$mjs"); 
         }
-
-        echo $mensaje;
-        $this->render();
     }
 
     function agregarAnotacion(){
-        $IdAnotacion   = $_SESSION['IdAnotacion'];
-        $IdProyecto    = $_SESSION['IdProyecto'];
+        $IdAnotacion   = $_POST['IdAnotacion'];
+        $IdProyecto    = $_POST['IdProyecto'];
+        $Fecha         = $_POST['Fecha'];
         $Documento     = $_POST['Documento'];
         $Anotacion     = $_POST['Anotacion'];
         $CedulaUsuario = $_POST['CedulaUsuario'];
@@ -92,19 +94,19 @@ class Anotaciones extends Controller{
         $arreglo = [
             'IdAnotacion' => $IdAnotacion,
             'IdProyecto' => $IdProyecto,
+            'Fecha'     => $Fecha,
             'Documento' => $Documento,
             'Anotacion' => $Anotacion,
             'CedulaUsuario' => $CedulaUsuario
         ];
 
         if($this->model->addAnotacion($arreglo)){
-        
-            $mensaje = '<div class="center mt-4 p-1 bg-primary text-white rounded"><h1>Anotación creada</h1></div>';  
+            $mjs = "Creado";  
+            header("Location: http://localhost/ProyectosUcrAs/anotaciones/listaEspecifica/".$IdProyecto."?ms=$mjs"); 
         }else{
-            $mensaje = '<div class="center mt-4 p-1 bg-danger text-white rounded"><h1>Anotación no Creado</h1></div>';  
+            $mjs = "No creado";  
+            header("Location: http://localhost/ProyectosUcrAs/anotaciones/listaEspecifica/".$IdProyecto."?ms=$mjs"); 
         }
-        $this->view->mensaje = $mensaje;
-        $this->render();
     }    
 
 

@@ -22,7 +22,7 @@ class UsuariosModel extends Model{
 
     public function deleteUser($id){
         try{
-            $query = $this->db->connect()->prepare('DELETE FROM `usuario` WHERE `cedula`= :Cedula');
+            $query = $this->db->connect()->prepare('DELETE FROM `usuarios` WHERE `cedula`= :Cedula');
             
             $query->execute(['Cedula'=>$id]);
             return true;
@@ -59,11 +59,11 @@ class UsuariosModel extends Model{
         }
     }
 
-    public function searchUser($Ced){
+    public function searchUser($ced){
         try{
             //preparacion del query, ejecucion y creacion de objeto
             $item = new Usuario();
-            $sql = $this->db->prepare('SELECT * FROM `usuarios` WHERE `cedula` = :Cedula');
+            $sql = $this->db->connect()->prepare('SELECT * FROM `usuarios` WHERE `cedula` = :Cedula');
             $sql->execute(['Cedula'=>$ced]);
 
             //recorre y guarda los datos en el objeto
@@ -85,7 +85,7 @@ class UsuariosModel extends Model{
 
     public function updateUser($data){
         try{
-            $query = $this->db->connect()->prepare('UPDATE `usuarios` SET `cedula`= :Cedula,`nombre`= :Nombre,`apellido`= :Apellido,`rol`= :Rol,`email`= :Email,`password`= :Password,`estado`= :Estado WHERE `cedula`= :Cedula;');
+            $query = $this->db->connect()->prepare('UPDATE `usuarios` SET `nombre`= :Nombre,`apellidos`= :Apellido,`rol`= :Rol,`email`= :Email,`password`= :Password,`estado`= :Estado WHERE `cedula`= :Cedula');
             $query->execute($data);
             return true;
         }catch(PDOException $e){

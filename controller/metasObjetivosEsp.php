@@ -2,37 +2,27 @@
 class MetasObjetivosEsp extends Controller{
     function __construct(){
         parent::__construct();      //constructor de libs/controller
-        $this->view->list = [];
-        $this->view->mensaje = "";
     }
 
-    function render($param = null){
-        $dsp = $this->model->getMetasObjetivosEsp();
-        $this->view->list = $dsp;
-        $this->view->render('metasObjetiosEsp/lista.php');
+    function listaEspecifica($param = null){
+        $conv = $this->model->getMetasObjetivosEspPr($param[0]);
+        $this->view->list = $conv;
+        $this->view->render('metasObjetivosEsp/lista');
     }
-
-    function verMetasObjetivosEsp($param = null){
-        //param [0] es un identificador
-        $id= $param[0];
-        $idb= $param[1];
-        $dis = $this->model->searchMetasObjetivosEsp($id,$idb);
-
-        //session_start();
-        //$_SESSION['id'] = $id;
-        //$_SESSION['idb'] = $idb;
-
-        //pasa a la view los datos
-        $this->view->item = $dis;
-        $this->view->mensaje = "";
-        $this->view->render('metasObjetiosEsp/ver.php');
-
+    function editar($param = null){
+        $obs = $this->model->searchMetasObjetivosEsp($param[0],$_GET['idc']);
+        $this->view->item = $obs;
+        $this->view->render('metasObjetivosEsp/editar');
+    }
+    function agregar($param = null){
+        $obs = $param[0];
+        $this->view->id = $obs;
+        $this->view->render('metasObjetivosEsp/agregar');
     }
 
     function editarMetasObjetivosEsp(){
-        session_start();
-        $IdMeta         =$_SESSION['IdMeta'];
-        $IdObjetivoEsp  =$_SESSION['IdObjetivoEsp'];
+        $IdMeta         =$_POST['IdMeta'];
+        $IdObjetivoEsp  =$_POST['IdObjetivoEsp'];
         $Meta           =$_POST['Meta'];
         $Indicador      =$_POST['Indicador'];
         
@@ -42,8 +32,6 @@ class MetasObjetivosEsp extends Controller{
             'Meta'            => $Meta,
             'Indicador'       => $Indicador
         ];
- 
-        unset_session($_SESSION['IdMeta'],$_SESSION['IdObjetivoEsp']);
 
         if($this->model->updateMetasObjetivosEsp($arreglo)){    
             $obj = new MetaObjetivoEsp();      
@@ -52,26 +40,32 @@ class MetasObjetivosEsp extends Controller{
             $obj->meta            = $Meta;
             $obj->indicador       = $Indicador;
             
-            $this->view->item = $obj;
-            $this->view->mensaje = '<div class="center mt-4 p-1 bg-primary text-white rounded"><h1>Registro actualizado</h1></div>';  
+            $mjs = "Actualizado";  
+            header("Location: http://localhost/ProyectosUcrAs/metasObjetivosEsp/listaEspecifica/".$IdObjetivoEsp."?ms=$mjs"); 
+            exit();  
         }else{          
-            $this->view->mensaje = '<div class="center mt-4 p-1 bg-danger text-white rounded"><h1>Registro no se actualizo</h1></div>';  
+            $mjs = "No actualizado";  
+            header("Location: http://localhost/ProyectosUcrAs/metasObjetivosEsp/listaEspecifica/".$IdObjetivoEsp."?ms=$mjs"); 
+            exit();  
         }
-
-        $this->view->render('metasObjetivosEsp/ver.php');
-
     }
 
     function borrarMetasObjetivosEsp($param = null){
-        $idp = $param[0];
-        $idc = $param[1];
+        $par = explode(',',$param[0]);
+        $sum = count($par);
+        $val = $sum -2;
+        $valOb = $sum -1;
+        $idp = $par[$val];
+        $ido = $par[$valOb];
       
-        if($this->model->deleteMetasObjetivosEsp($idp,$idc)){    
-             $mensaje = '<div class="center mt-4 p-1 bg-primary text-white rounded"><h1>Registro eliminado con ID: '.$idc.' PROYECTO :'.$idp.'</h1></div>';  
-             $mensaje = "Borrado";
+        if($this->model->deleteMetasObjetivosEsp($idp,$ido)){    
+             $mjs = "Borrado";  
+             header("Location: http://localhost/ProyectosUcrAs/metasObjetivosEsp/listaEspecifica/".$idp."?ms=$mjs"); 
+             exit();  
         }else{          
-             $mensaje = '<div class="center mt-4 p-1 bg-danger text-white rounded"><h1>No se logro borrar</h1></div>';  
-             $mensaje = "No Borrado";
+            $mjs = "No borrado";  
+            header("Location: http://localhost/ProyectosUcrAs/metasObjetivosEsp/listaEspecifica/".$idp."?ms=$mjs"); 
+            exit();  
         }
 
         echo $mensaje;
@@ -93,13 +87,14 @@ class MetasObjetivosEsp extends Controller{
         ];
 
         if($this->model->addMetasObjetivosEsp($arreglo)){
-        
-            $mensaje = '<div class="center mt-4 p-1 bg-primary text-white rounded"><h1>Registro creada</h1></div>';  
+            $mjs = "Creado";  
+            header("Location: http://localhost/ProyectosUcrAs/metasObjetivosEsp/listaEspecifica/".$IdObjetivoEsp."?ms=$mjs"); 
+            exit();  
         }else{
-            $mensaje = '<div class="center mt-4 p-1 bg-danger text-white rounded"><h1>Registro no creado</h1></div>';  
+            $mjs = "No creado";  
+            header("Location: http://localhost/ProyectosUcrAs/metasObjetivosEsp/listaEspecifica/".$IdObjetivoEsp."?ms=$mjs"); 
+            exit();  
         }
-        $this->view->mensaje = $mensaje;
-        $this->render();
     }   
 
 }

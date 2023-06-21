@@ -2,14 +2,28 @@
 class ProgramasAdsentos extends Controller{
     function __construct(){
         parent::__construct(); //constructor de libs/controller
-        $this->view->list = [];
-        $this->view->mensaje = "";
     }
 
     function render(){
         $prm = $this->model->getProgramaAds();
         $this->view->$list = $prm;
         $this->view->render('programaAdsento/lista.php');
+    }
+
+    function listaEspecifica($param = null){
+        $conv = $this->model->getProgramaAdsPr($param[0]);
+        $this->view->list = $conv;
+        $this->view->render('programaAdsento/lista');
+    }
+    function editar($param = null){
+        $obs = $this->model->searchProgramaAds($param[0],$_GET['idc']);
+        $this->view->item = $obs;
+        $this->view->render('programaAdsento/editar');
+    }
+    function agregar($param = null){
+        $obs = $param[0];
+        $this->view->id = $obs;
+        $this->view->render('programaAdsento/agregar');
     }
 
     function verProgramaAds($paramA = null){
@@ -37,26 +51,33 @@ class ProgramasAdsentos extends Controller{
             $pg->idProyecto            = $IdProyecto;
             $pg->$programaAdsento      = $ProgramaAdsento; 
 
-            $this->view->item = $pg;
-            $this->view->mensaje = '<div class="center mt-4 p-1 bg-primary text-white rounded"><h1>Registro actualizado</h1></div>';  
+            $mjs = "Actualizado";  
+            header("Location: http://localhost/ProyectosUcrAs/programasAdsentos/listaEspecifica/".$IdProyecto."?ms=$mjs"); 
+            exit();  
         }else{
-            $this->view->mensaje = '<div class="center mt-4 p-1 bg-danger text-white rounded"><h1>Registro no se actualizó</h1></div>';  
+            $mjs = "No actualizado";  
+            header("Location: http://localhost/ProyectosUcrAs/programasAdsentos/listaEspecifica/".$IdProyecto."?ms=$mjs"); 
+            exit();    
         }
-        $this->view->render('programaAdsento/ver.php');
     }
 
-    function eliminarProgramaAds($paramA = null){
-        $id = $paramA[0];
-        if($this->model->deleteProgramaAds($paramA[0],$paramA[1])){    
-             $mensaje = '<div class="center mt-4 p-1 bg-primary text-white rounded"><h1>Registro eliminado</h1></div>';  
-             $mensaje = "Borrado";
+    function eliminarProgramaAds($param = null){
+        $par = explode(',',$param[0]);
+        $sum = count($par);
+        $val = $sum -2;
+        $valOb = $sum -1;
+        $idp = $par[$val];
+        $ido = $par[$valOb];
+        if($this->model->deleteProgramaAds($idp,$ido)){    
+            $mjs = "Borrado";  
+            header("Location: http://localhost/ProyectosUcrAs/programasAdsentos/listaEspecifica/".$idp."?ms=$mjs"); 
+            exit();  
         }else{          
-             $mensaje = '<div class="center mt-4 p-1 bg-danger text-white rounded"><h1>Registro no se logró borrar</h1></div>';  
-             $mensaje = "No Borrado";
+            $mjs = "no borrado";  
+            header("Location: http://localhost/ProyectosUcrAs/programasAdsentos/listaEspecifica/".$idp."?ms=$mjs"); 
+            exit();  
         }
 
-        echo $mensaje;
-        $this->render();
     }
 
     function agregarProgramaAds(){
@@ -67,18 +88,19 @@ class ProgramasAdsentos extends Controller{
 
         $arreglo = [
             'IdProgramaAdsento'     => $IdProgramaAdsento,
-            'IdProyectoo'           => $IdProyecto,
+            'IdProyecto'           => $IdProyecto,
             'ProgramaAdsento'       => $ProgramaAdsento
         ];
 
-        if($this->model->addProyectoAds($arreglo)){
-
-            $this->view->mensaje = '<div class="center mt-4 p-1 bg-primary text-white rounded"><h1>Registro añadida</h1></div>';  
+        if($this->model->addProgramaAds($arreglo)){
+            $mjs = "Creado";  
+            header("Location: http://localhost/ProyectosUcrAs/programasAdsentos/listaEspecifica/".$IdProyecto."?ms=$mjs"); 
+            exit();    
         }else{
-            $this->view->mensaje = '<div class="center mt-4 p-1 bg-danger text-white rounded"><h1>Registro no se agregó</h1></div>';  
+            $mjs = "No creado";  
+            header("Location: http://localhost/ProyectosUcrAs/programasAdsentos/listaEspecifica/".$IdProyecto."?ms=$mjs"); 
+            exit();    
         }
-        $this->render();
-
 
     }
 

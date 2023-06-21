@@ -5,12 +5,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="../css/styles.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
 </head>
 <body>
-<div><?php echo $this->mensaje;?></div>   
+<div class="center bg-primary text-center text-white rounded"><?php echo $this->mensaje;?></div>   
 <div class="conatiner-fluid min-vh-100 d-flex justify-content-center bg-image" 
     style="background-image: url('../img/white-abstract.jpg');">
     <div class="row col-sm-10 bg-primary mb-5 mt-4 h-50">
@@ -31,8 +31,11 @@
                         <input type="text" class="form-control" id="Apellidos" name="Apellidos">
                     </div>
                     <div class="mb-3">
-                        <label for="pwd" style="color: white;" class="form-label mt-2">Rol:</label>
-                        <input type="number" class="form-control" id="Rol" name="Rol">
+                        <label for="rols" style="color: white;" class="form-label mt-2">Rol:</label>
+                        <select class="form-control" id="rols" name="Rol" id="Rol">
+                            <option value="1">Administrador</option>
+                            <option value="2">Profesor</option>
+                        </select>
                     </div>
                 </div>
                 <div class="col-sm-6">

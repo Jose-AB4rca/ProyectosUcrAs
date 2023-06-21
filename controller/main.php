@@ -6,10 +6,11 @@ class Main extends Controller{
         parent::__construct();        
     }
 
-    function render(){     
+    function render(){  
+        $pry = $this->model->getProyectos();
+        $this->view->list = $pry;
         $this->view->render('main/index');       
     }
-
 }
 
 ?>

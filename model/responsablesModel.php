@@ -1,5 +1,6 @@
 <?php
-class ResponsableModel extends Model{
+include_once('class/Responsables.php');
+class ResponsablesModel extends Model{
     function __construct(){
         parent::__construct();
     }
@@ -9,7 +10,7 @@ class ResponsableModel extends Model{
             VALUES (:IdResponsable,:IdProyecto,:Responsable)');
             $sql->execute($data);
             return true;
-        }catch(PDOExeption $e){
+        }catch(PDOException $e){
             print_r('Error connection: ' . $e->getMessage());
               return false;
         }
@@ -17,11 +18,11 @@ class ResponsableModel extends Model{
 
     function updateResponsable($data){
         try{
-            $sql = $this->db->connect()->prepare('UPDATE `responsables` SET `idResponsable`=:IdResponsable,`idProyecto`=:IdProyecto,`responsable`=:Responsable 
-            WHERE idResponsable`=:IdResponsable AND `idProyecto`=:IdProyecto');
+            $sql = $this->db->connect()->prepare('UPDATE `responsables` SET `responsable`=:Responsable 
+            WHERE `idResponsable`=:IdResponsable AND `idProyecto`=:IdProyecto');
             $sql->execute($data);
             return true;
-        }catch(PDOExeption $e){
+        }catch(PDOException $e){
             print_r('Error connection: ' . $e->getMessage());
             return false;
         }
@@ -31,9 +32,9 @@ class ResponsableModel extends Model{
         try{
             $sql = $this->db->connect()->prepare('DELETE FROM `responsables`
              WHERE `idResponsable`=:IdResponsable AND `idProyecto`=:IdProyecto');
-            $sql->execute(['IdResponsable'=>$idc],['IdProyecto'=>$idp]);
+            $sql->execute(array('IdResponsable'=>$idc,'IdProyecto'=>$idp));
             return true;
-        }catch(PDOExeption $e){
+        }catch(PDOException $e){
             print_r('Error connection: ' . $e->getMessage());
             return false;
         }
@@ -43,7 +44,7 @@ class ResponsableModel extends Model{
         try{
             $sql = $this->db->connect()->prepare('SELECT * FROM `responsables`
             WHERE `idResponsable`=:IdResponsable AND `idProyecto`=:IdProyecto');
-            $sql->execute(['IdResponsable'=>$idc],['IdProyecto'=>$idp]);
+            $sql->execute(array('IdResponsable'=>$idc,'IdProyecto'=>$idp));
             $res = new Responsable();
 
             while($row = $sql->fetch()){
@@ -52,7 +53,7 @@ class ResponsableModel extends Model{
                 $res->responsable       = $row['responsable'];   
              }
             return $res;
-        }catch(PDOExeption $e){
+        }catch(PDOException $e){
               return [];
         }
     }
@@ -69,7 +70,25 @@ class ResponsableModel extends Model{
                 array_push($items,$res);
             }
             return $items;
-        }catch(PDOExeption $e){
+        }catch(PDOException $e){
+              return [];
+        }
+    }
+    function getResponsablesPr($id){
+        $items = [];
+        try{
+            $sql = $this->db->connect()->prepare('SELECT * FROM `responsables`
+            WHERE `idProyecto`=:idd');  
+            $sql->execute(['idd'=>$id]);          
+            while($row = $sql->fetch()){
+                $res = new Responsable();
+                $res->idResponsable     = $row['idResponsable'];
+                $res->idProyecto        = $row['idProyecto'];
+                $res->responsable       = $row['responsable'];  
+                array_push($items,$res);
+            }
+            return $items;
+        }catch(PDOException $e){
               return [];
         }
     }

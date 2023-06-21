@@ -18,17 +18,17 @@ class RolModel extends Model{
                 array_push($roles,$rol);
             }
             return $roles; 
-        }catch(PDOExeption $e){
+        }catch(PDOException $e){
             return [];
         }
     }
 
     function addRol($data){
         try{
-            $sql = $this->db->connect()-prepare('INSERT INTO `rol` VALUES (`idRol`,`tipoRol`) VALUES (`:IdRol`,`:TipoRol`)');
+            $sql = $this->db->connect()->prepare('INSERT INTO `rol` VALUES (`idRol`,`tipoRol`) VALUES (`:IdRol`,`:TipoRol`)');
             $sql->execute($data);
             return true;
-        }catch(PDOExeption $e){
+        }catch(PDOException $e){
             print_r('Error connection: ' . $e->getMessage());
               return false;
         }
@@ -41,7 +41,7 @@ class RolModel extends Model{
             $sql->execute($data);
             return true;
 
-        }catch(PDOExeption $e){
+        }catch(PDOException $e){
             print_r('Error connection: ' . $e->getMessage());
               return false;
         }
@@ -58,7 +58,7 @@ class RolModel extends Model{
             }
             return $rol;
 
-        }catch(PDOExeption $e){
+        }catch(PDOException $e){
             return [];
         }
     }
@@ -66,9 +66,9 @@ class RolModel extends Model{
     function deleteRol($id){
         try{
             $sql = $this->db->connect()->prepare('DELETE * FROM `rol` WHERE `idRol`=:IdRol');
-            $query->execute(['idRol'=>$id]);
+            $sql->execute(['idRol'=>$id]);
             return true;
-        }catch(PDOExeption $e){
+        }catch(PDOException $e){
             print_r('Error connection: ' . $e->getMessage());
               return false;
         }

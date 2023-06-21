@@ -2,11 +2,10 @@
 
 class View{
     public $mensaje;
+    public $id;
     public $usuario;
     public $usuarios;
     public $proyecto;
-    public $anotaciones;
-    public $anotacion;
     public $item;
     public $list;
 

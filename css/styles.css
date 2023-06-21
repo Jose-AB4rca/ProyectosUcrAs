@@ -9,6 +9,7 @@
     border-color: rgb(255, 255, 255) !important;
     color: rgb(255, 255, 255) !important;
     margin-right: 0.5rem;
+    margin-left: 0.5rem;
 }
 .navbar-brand, .nav-link{
     color: white !important;
@@ -17,8 +18,16 @@
 .navbar-brand{
     margin-left: 0.65rem;
 }
+#admin-cards{
+    box-shadow: 0px 0px 10px black;
+}
+   
 @media screen and (max-width: 576px){
     .nav-link{
         margin-left: 0.5rem;
+    }
+    #admin-cards{
+        margin-left: 0.55rem;
+        margin-right: 0.55rem;
     }
 }

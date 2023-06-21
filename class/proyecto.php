@@ -1,6 +1,7 @@
 <?php
 class Proyecto{
     public $idProyecto;
+    public $titulo;
     public $descripcion;
     public $encargado;
     public $observaciones;
@@ -8,7 +9,7 @@ class Proyecto{
     public $antecedentes;
     public $objetivoGeneral;
     public $subActividadesSubstantivas;
-    public $metologia;
+    public $metodologia;
     public $fechaInicio;
     public $fechaFin;
     public $fechaRegistro;

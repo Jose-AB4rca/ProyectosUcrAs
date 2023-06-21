@@ -1,6 +1,7 @@
 <?php
 class Controller{
-
+    public $view;
+    public $model;
     // Esta clase carga el modelo 
     // Y transmite la referencia de libs/View via __construc
     public function __construct()

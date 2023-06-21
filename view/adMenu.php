@@ -4,34 +4,58 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Main</title>
-    <link rel="stylesheet" href="css/styles.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <title></title>
 </head>
 <body>
 <nav class="navbar navbar-expand-sm" id="menusPry">
   <div class="container-fluid">
-    <a class="navbar-brand" href="javascript:void(0)">byteSoftware</a>
+    <a class="navbar-brand" href="<?php echo constant('URL');?>">byteSoftware</a>
     <button class="navbar-toggler navbar-dark" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
       <span class="navbar-toggler-icon navbar-dark"></span>
     </button>
     <div class="collapse navbar-collapse" id="mynavbar">
       <ul class="navbar-nav me-auto">
         <li class="nav-item">
-          <a class="nav-link" href="javascript:void(0)">Secciones</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="javascript:void(0)">Proyectos</a>
+          <a class="nav-link" href="<?php echo constant('URL');?>vistas/proyectos">Tareas administrativas</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="javascript:void(0)">Acerca de</a>
         </li>
       </ul>
-      <form class="d-flex justify-content-center">
-        <a class="btn" id="init"  href="<?php echo constant('URL');?>usuarios"><?php echo ($_SESSION['cedula']);?></a>
-        <a class="btn" id="init"  href="<?php echo constant('URL');?>login/desconectar">Cerrar sesión</a>
-      </form>
+      <div class="d-flex justify-content-center">
+        <!-- Button trigger modal -->
+        <button type="button" id="init" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          <?php echo ('Bienvenido :'.$_SESSION['NameUser']);?>
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Datos del usuario</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <p class=text-break>
+                <?php echo ('Bienvenido :'.$_SESSION['NameUser']);?>
+                <br>
+                <?php echo ('Cedula usuario :'.$_SESSION['cedula']);?>
+                <br>
+                <?php
+                  $value = $_SESSION['Rol'] == '1' ? "Administrador" : "Profesor";
+                  echo ('Rol asignado :'.$value);?>
+                </p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <a type="button" href="<?php echo constant('URL').'usuarios/editar/'.$_SESSION['cedula']?>" class="btn btn-primary">Editar mi usuario</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <a class="btn" id="init"  href="<?php echo constant('URL').'login/desconectar';?>">Cerrar sesión</a>
+      </div>
     </div>
   </div>
 </nav> 

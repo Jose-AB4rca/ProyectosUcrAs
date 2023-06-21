@@ -5,18 +5,34 @@ class Convenios extends Controller{
         $this->view->mensaje = "";
         $this->view->list =[];
     }
-
+    //metoodos para vistas
     function render(){
         $conv = $this->model->getConvenios();
         $this->view->list = $conv;
-        $this->view->render('convenios/lista.php');
+        $this->view->render('convenios/lista');
     }
     function verConvenio($paramA = null){
         $conv = $this->model->searchConvenio($paramA[0],$paramA[1]);
         $this->view->item = $conv;
-        $this->view->render('convenios/ver.php');
+        $this->view->render('convenios/ver');
+    }
+    function listaEspecifica($param = null){
+        $conv = $this->model->getConveniosPr($param[0]);
+        $this->view->list = $conv;
+        $this->view->render('convenios/lista');
+    }
+    function editar($param = null){
+        $obs = $this->model->searchConvenio($param[0],$_GET['idc']);
+        $this->view->item = $obs;
+        $this->view->render('convenios/editar');
+    }
+    function agregar($param = null){
+        $obs = $param[0];
+        $this->view->id = $obs;
+        $this->view->render('convenios/agregar');
     }
 
+    //metodos para transacciones de datos 
     function agregarConvenio(){
         $IdConvenio  = $_POST['IdConvenio'];
         $IdProyecto  = $_POST['IdProyecto'];
@@ -29,12 +45,14 @@ class Convenios extends Controller{
         ];
         $mensaje = "";
         if($this->model->addConvenio($arreglo)){
-            $mensaje = '<div class="center mt-4 p-1 bg-primary text-white rounded"><h1>Convenio creado</h1></div>';  
+            $mjs = "Agregado";  
+            header("Location: http://localhost/ProyectosUcrAs/convenios/listaEspecifica/".$IdProyecto."?ms=$mjs"); 
+            exit();  
         }else{
-            $mensaje = '<div class="center mt-4 p-1 bg-danger text-white rounded"><h1>Convenio no Creado</h1></div>';  
+            $mjs = "No añadido";  
+            header("Location: http://localhost/ProyectosUcrAs/convenios/listaEspecifica/".$IdProyecto."?ms=$mjs"); 
+            exit();  
         }
-        $this->view->mensaje = $mensaje;
-        $this->render();   
     }
 
     function editarConvenio(){
@@ -52,22 +70,34 @@ class Convenios extends Controller{
             $conv = new Convenio();
             $conv->idConvenio = $IdConvenio;
             $conv->idProyecto = $IdProyecto;
-            $conv->$convenios = $Convenios;
+            $conv->convenios = $Convenios;
 
-            $this->view->item = $conv;
-
-            $mensaje = '<div class="center mt-4 p-1 bg-primary text-white rounded"><h1>Convenio actualizado</h1></div>';  
+            $mjs = "Editado";  
+            header("Location: http://localhost/ProyectosUcrAs/convenios/listaEspecifica/".$IdProyecto."?ms=$mjs"); 
+            exit();  
         }else{
-            $mensaje = '<div class="center mt-4 p-1 bg-primary text-white rounded"><h1>Convenio no actualizado</h1></div>';  
+            $mjs = "No editado";  
+            header("Location: http://localhost/ProyectosUcrAs/convenios/listaEspecifica/".$IdProyecto."?ms=$mjs"); 
+            exit();  
         }    
-        $this->render();
     }
 
-    function eliminarConvenio($paramA = null){
-        if($this->model->deleteConvenio($paramA[0],$paramA[1])){
-            $mensaje = '<div class="center mt-4 p-1 bg-primary text-white rounded"><h1>Convenio eliminado</h1></div>';  
+    function eliminarConvenio($param = null){
+        $par = explode(',',$param[0]);
+        $sum = count($par);
+        $val = $sum -2;
+        $valOb = $sum -1;
+        $idp = $par[$val];
+        $ido = $par[$valOb];
+        if($this->model->deleteConvenio($idp,$ido)){
+            $mjs = "Eliminado";  
+            var_dump($par);
+            header("Location: http://localhost/ProyectosUcrAs/convenios/listaEspecifica/".$idp."?ms=$mjs"); 
+            exit();  
         }else{
-            $mensaje = '<div class="center mt-4 p-1 bg-primary text-white rounded"><h1>No borrado</h1></div>';  
+            $mjs = "No eliminado";  
+            header("Location: http://localhost/ProyectosUcrAs/convenios/listaEspecifica/".$idp."?ms=$mjs"); 
+            exit();    
         }
     }
 

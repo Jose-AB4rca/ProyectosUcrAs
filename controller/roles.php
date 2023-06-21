@@ -2,14 +2,7 @@
 class Roles extends Controller{
     function __construct(){
         parent::__construct();      //constructor de libs/controller
-        $this->view->list = [];
-        $this->view->mensaje = "";
-    }
 
-    function render(){
-       $userlist = $this->model->getRoles();
-       $this->view->list = $userList;
-       $this->render('roles/roles.php');
     }
 
     function verRol($param = null){
@@ -66,8 +59,6 @@ class Roles extends Controller{
              $mensaje = "No Borrado";
         }
 
-        echo $mensaje;
-        $this->render();
     }
 
     function registrarUsuario(){
@@ -86,9 +77,6 @@ class Roles extends Controller{
         }else{
             $mensaje = '<div class="center mt-4 p-1 bg-danger text-white rounded"><h1>Rol no creado</h1></div>';  
         }
-
-        $this->view->mensaje = $mensaje;
-        $this->render();
               
     }
 
@@ -105,7 +93,7 @@ class Roles extends Controller{
         }else{
             $mensaje = '<div class="center mt-4 p-1 bg-primary text-white rounded"><h1>rol no actualizado</h1></div>';  
         }
-        $this->render();
+
     }
 }
 ?>

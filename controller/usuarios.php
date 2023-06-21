@@ -4,16 +4,27 @@ class Usuarios extends Controller{
         parent::__construct(); //constructor de libs/controller
     }
 
+    //metodos para cargar las vistas
     function render(){
        $userlist = $this->model->listUser();
        $this->view->list = $userlist;
-       $this->view->render('main/index');
+       $this->view->render('users/lista');
     }
-    //carga la vista del registro
     function registro(){
         $this->view->render('users/agregar');
-     }
+    }
+    function editar($param = null){
+        $Us = $this->model->searchUser($param[0]);
+        $this->view->item = $Us;
+        $this->view->render('users/editar');
+    }
+    function lista(){
+        $this->view->list = $this->model->listUser();
+        $this->view->render('users/lista');
+    }
+    //fin de metodos para cargar las vistas
 
+    //metodos para transacciones de datos con la BD
     function verUser($param = null){
         //la posicion [0] es un identificador
         $idusuario = $param[0];
@@ -28,17 +39,15 @@ class Usuarios extends Controller{
         $this->view->render('users/ver.php');
 
     }
-
+    //1 usuario
     function actualizarUsuario(){
-        session_start();
-        $Cedula = $_SESSION['Cedula'];        
+        $Cedula = $_POST['Cedula'];        
         $Nombre = $_POST['Nombre'];
-        $Apellido       = $_POST['Apellido'];
+        $Apellido       = $_POST['Apellidos'];
         $Rol     = $_POST['Rol'];
         $Email         = $_POST['Email'];
         $Password         = $_POST['Password'];
         $Estado       = $_POST['Estado'];
-        $FechaRegistro = $_POST['FechaRegistro'];
 
         $arreglo = [
             'Cedula' => $Cedula,
@@ -47,49 +56,43 @@ class Usuarios extends Controller{
             'Rol' => $Rol,
             'Email' => $Email,
             'Password' => $Password,
-            'Estado' => $Estado,
-            'FechaRegistro' => $FechaRegistro
+            'Estado' => $Estado
         ];
-
-        unset($_SESSION['Cedula']);
-
-        if($this->model->updateUsuario($arreglo)){    
+        if($this->model->updateUser($arreglo)){    
             $usuario = new Usuario();      
 
             $usuario->cedula = $Cedula;
             $usuario->nombre = $Nombre;
-            $usuario->apellidos = $Nombre;
-            $usuario->rol = $Apellidos;
+            $usuario->apellidos = $Apellido;
+            $usuario->rol = $Rol;
             $usuario->email = $Email;
-            $usuario->email = $Password;
+            $usuario->password = $Password;
             $usuario->estado = $Estado;
-            $usuario->fechaRegistro = $FechaRegistro;
-            //$usuario->Passwords = $row['Password'];
+
+            
             
             $this->view->item = $usuario;
-            $this->view->mensaje = '<div class="center mt-4 p-1 bg-primary text-white rounded"><h1>Usuario Actualizado</h1></div>';  
+
+            $this->view->mensaje = '<div class="center bg-primary text-white rounded"><p>Usuario Actualizado, inicia sesión para refescar tus datos</p></div>';  
         }else{          
-            $this->view->mensaje = '<div class="center mt-4 p-1 bg-danger text-white rounded"><h1>Usuario no se actualizo</h1></div>';  
+            $this->view->mensaje = '<div class="center bg-danger text-white rounded"><p>Usuario no se actualizó</p></div>';  
         }
 
-        $this->view->render('users/lista.php');
+        $this->view->render('users/editar');
+        
 
-    }    
+    }  
 
     function eliminarUsuario($param = null){
         $idusuario = $param[0];
-        //echo "Se elimina ".$idusuario;
-        //version ajax
-        if($this->model->deleteUsuario($idusuario)){    
-             $mensaje = '<div class="center mt-4 p-1 bg-primary text-white rounded"><h1>Usuario Eliminado con el ID: '.$idusuario.'</h1></div>';  
+  
+        if($this->model->deleteUser($idusuario)){    
              $mensaje = "Borrado";
         }else{          
-             $mensaje = '<div class="center mt-4 p-1 bg-danger text-white rounded"><h1>Usuario no se logro borrar</h1></div>';  
-             $mensaje = "No Borrado";
+             $mensaje = "No borrado";
         }
-
-        echo $mensaje;
-        $this->render();
+        $this->view->mensaje = $mensaje;
+        header("Location: http://localhost/ProyectosUcrAs/usuarios/lista");
     }
 
     function registrarUsuario(){
@@ -115,7 +118,7 @@ class Usuarios extends Controller{
         if($this->model->addUser($arreglo)){
             $mjs = "Usuario Creado";  
             $this->view->mensaje = $mjs;
-            header("Location: http://localhost/ProyectosUcrAs/");
+            header("Location: http://localhost/ProyectosUcrAs?ms=$mjs");
         }else{
             $mjs = "Usuario No Creado";
             $this->view->mensaje = $mjs;

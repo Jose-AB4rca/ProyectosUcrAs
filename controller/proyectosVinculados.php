@@ -2,8 +2,6 @@
 class ProyectosVinculados extends Controller{
     function __construct(){
         parent::__construct(); //constructor de libs/controller
-        $this->view->proyectosV = [];
-        $this->view->mensaje = "";
     }
 
     function render(){
@@ -12,10 +10,26 @@ class ProyectosVinculados extends Controller{
         $this->view->render('proyectoVinculado/lista.php');
     }
 
+    function listaEspecifica($param = null){
+        $conv = $this->model->getProyectosVinPr($param[0]);
+        $this->view->list = $conv;
+        $this->view->render('proyectoVinculado/lista');
+    }
+    function editar($param = null){
+        $obs = $this->model->searchProyectoVin($param[0],$_GET['idc']);
+        $this->view->item = $obs;
+        $this->view->render('proyectoVinculado/editar');
+    }
+    function agregar($param = null){
+        $obs = $param[0];
+        $this->view->id = $obs;
+        $this->view->render('proyectoVinculado/agregar');
+    }
+
     function verProyectoVin($paramA = null){
         $pry = $this->model->searchProyectoVin($paramA[0],$paramA[1]);
         $this->view->item = $pry;
-        $this->view->render('proyectoVinculado/ver.php');
+        $this->view->render('proyectoVinculado/ver');
     }
 
     function editarProyectoVin(){
@@ -36,22 +50,31 @@ class ProyectosVinculados extends Controller{
             $pgv->idProyecto            = $IdProyecto;
             $pgv->proyectoVinculado     = $ProyectoVinculado ; 
 
-            $this->view->item = $pgv;
-            $this->view->mensaje = '<div class="center mt-4 p-1 bg-primary text-white rounded"><h1>Registro actualizado</h1></div>';  
+            $mjs = "Actualizado";  
+            header("Location: http://localhost/ProyectosUcrAs/proyectosVinculados/listaEspecifica/".$IdProyecto."?ms=$mjs"); 
+            exit();  
         }else{
-            $this->view->mensaje = '<div class="center mt-4 p-1 bg-danger text-white rounded"><h1>Registro no se actualizó</h1></div>';  
+            $mjs = "No actualizado";  
+            header("Location: http://localhost/ProyectosUcrAs/proyectosVinculados/listaEspecifica/".$IdProyecto."?ms=$mjs"); 
+            exit();   
         }
-        $this->view->render('proyectoVinculado/ver.php');
     }
 
-    function eliminarProyectoVin($paramA = null){
-        $id = $paramA[0];
-        if($this->model->deleteProyectoVin($paramA[0],$paramA[1])){    
-             $mensaje = '<div class="center mt-4 p-1 bg-primary text-white rounded"><h1>Registro eliminado</h1></div>';  
-             $mensaje = "Borrado";
+    function eliminarProyectoVin($param = null){
+        $par = explode(',',$param[0]);
+        $sum = count($par);
+        $val = $sum -2;
+        $valOb = $sum -1;
+        $idp = $par[$val];
+        $ido = $par[$valOb];
+        if($this->model->deleteProyectoVin($idp,$ido)){    
+            $mjs = "Borrado";  
+            header("Location: http://localhost/ProyectosUcrAs/proyectosVinculados/listaEspecifica/".$idp."?ms=$mjs"); 
+            exit();  
         }else{          
-             $mensaje = '<div class="center mt-4 p-1 bg-danger text-white rounded"><h1>Registro no se logró borrar</h1></div>';  
-             $mensaje = "No Borrado";
+            $mjs = "No borrado";  
+            header("Location: http://localhost/ProyectosUcrAs/proyectosVinculados/listaEspecifica/".$idp."?ms=$mjs"); 
+            exit();  
         }
 
         echo $mensaje;
@@ -71,13 +94,14 @@ class ProyectosVinculados extends Controller{
 
         if($this->model->addProyectoVin($arreglo)){
 
-            $this->view->mensaje = '<div class="center mt-4 p-1 bg-primary text-white rounded"><h1>Registro añadida</h1></div>';  
+            $mjs = "Creado";  
+            header("Location: http://localhost/ProyectosUcrAs/proyectosVinculados/listaEspecifica/".$IdProyecto."?ms=$mjs"); 
+            exit();  
         }else{
-            $this->view->mensaje = '<div class="center mt-4 p-1 bg-danger text-white rounded"><h1>Registro no se agregó</h1></div>';  
+            $mjs = "No creado";  
+            header("Location: http://localhost/ProyectosUcrAs/proyectosVinculados/listaEspecifica/".$IdProyecto."?ms=$mjs"); 
+            exit();  
         }
-        $this->view->render('proyectoVinculado/lista.php');
-
-
     }
 
 

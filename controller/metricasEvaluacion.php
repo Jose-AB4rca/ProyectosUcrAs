@@ -1,15 +1,29 @@
-<?
+<?php
 class MetricasEvaluacion extends Controller{
     function __construct(){
         parent::__construct();      //constructor de libs/controller
-        $this->view->list = [];
-        $this->view->mensaje = "";
     }
 
     function render($param = null){
         $dsp = $this->model->getMetricaEvaluacion();
         $this->view->list = $dsp;
-        $this->view->render('metricaEvaluacion/lista.php');
+        $this->view->render('metricaEvaluacion/lista');
+    }
+
+    function listaEspecifica($param = null){
+        $conv = $this->model->getMetricaEvaluacionPr($param[0]);
+        $this->view->list = $conv;
+        $this->view->render('metricasEvaluacion/lista');
+    }
+    function editar($param = null){
+        $obs = $this->model->searchMetricaEvaluacion($param[0],$_GET['idc']);
+        $this->view->item = $obs;
+        $this->view->render('metricasEvaluacion/editar');
+    }
+    function agregar($param = null){
+        $obs = $param[0];
+        $this->view->id = $obs;
+        $this->view->render('metricasEvaluacion/agregar');
     }
 
     function verMetricaEva($param = null){
@@ -26,10 +40,9 @@ class MetricasEvaluacion extends Controller{
     }
 
     function editarMetricaEva(){
-        session_start();
 
-        $IdMetrica              = $_SESSION['IdMetrica'];
-        $IdProyecto             = $_SESSION['IdProyecto'];
+        $IdMetrica              = $_POST['IdMetrica'];
+        $IdProyecto             = $_POST['IdProyecto'];
         $EvaluacionProyecto    = $_POST['EvaluacionProyecto'];
         $EvaluacionImpacto      = $_POST['EvaluacionImpacto'];
         $EvaluacionParticipante = $_POST['EvaluacionParticipante'];
@@ -37,13 +50,10 @@ class MetricasEvaluacion extends Controller{
         $arreglo = [
             'IdMetrica'           => $IdMetrica,
             'IdProyecto'          => $IdProyecto,
-            'EvaluacionProyecto' => $EvaluacionProyecto,
+            'EvaluacionProyeecto' => $EvaluacionProyecto,
             'EvaluacionImpacto'   => $EvaluacionImpacto,
             'EvaluacionParticipante'  => $EvaluacionParticipante
         ];
- 
-        unset_session($_SESSION['IdMetrica'],$_SESSION['IdProyecto']);
-
         if($this->model->updateMetricaEvaluacion($arreglo)){    
             $eva = new MetricaEvaluacion();      
             $eva->idMetrica           = $IdMetrica;
@@ -52,10 +62,13 @@ class MetricasEvaluacion extends Controller{
             $eva->evaluacionImpacto       = $EvaluacionImpacto;
             $eva->evaluacionParticipante  = $EvaluacionParticipante;
             
-            $this->view->item = $eva;
-            $this->view->mensaje = '<div class="center mt-4 p-1 bg-primary text-white rounded"><h1>Registro actualizado</h1></div>';  
+            $mjs = "Actualizado";  
+            header("Location: http://localhost/ProyectosUcrAs/metricasEvaluacion/listaEspecifica/".$IdProyecto."?ms=$mjs"); 
+            exit();  
         }else{          
-            $this->view->mensaje = '<div class="center mt-4 p-1 bg-danger text-white rounded"><h1>Registro no se actualizo</h1></div>';  
+            $mjs = "No cambiado";  
+            header("Location: http://localhost/ProyectosUcrAs/metricasEvaluacion/listaEspecifica/".$IdProyecto."?ms=$mjs"); 
+            exit();    
         }
 
         $this->view->render('metricaEvaluacion/ver.php');
@@ -63,19 +76,22 @@ class MetricasEvaluacion extends Controller{
     }
 
     function borrarMetricaEva($param = null){
-        $idp = $param[0];
-        $idc = $param[1];
+        $par = explode(',',$param[0]);
+        $sum = count($par);
+        $val = $sum -2;
+        $valOb = $sum -1;
+        $idp = $par[$val];
+        $ido = $par[$valOb];
       
-        if($this->model->deleteMetricaEvaluacion($idp,$idc)){    
-             $mensaje = '<div class="center mt-4 p-1 bg-primary text-white rounded"><h1>Registro eliminado con ID: '.$idc.' PROYECTO :'.$idp.'</h1></div>';  
-             $mensaje = "Borrado";
+        if($this->model->deleteMetricaEvaluacion($idp,$ido)){    
+            $mjs = "Borrado";  
+            header("Location: http://localhost/ProyectosUcrAs/metricasEvaluacion/listaEspecifica/".$idp."?ms=$mjs"); 
+            exit();    
         }else{          
-             $mensaje = '<div class="center mt-4 p-1 bg-danger text-white rounded"><h1>No se logro borrar</h1></div>';  
-             $mensaje = "No Borrado";
+            $mjs = "No borrado";  
+            header("Location: http://localhost/ProyectosUcrAs/metricasEvaluacion/listaEspecifica/".$idp."?ms=$mjs"); 
+            exit();    
         }
-
-        echo $mensaje;
-        $this->render();
     }
 
     function agregarMetricaEva(){
@@ -95,13 +111,14 @@ class MetricasEvaluacion extends Controller{
         ];
 
         if($this->model->addMetricaEvaluacion($arreglo)){
-        
-            $mensaje = '<div class="center mt-4 p-1 bg-primary text-white rounded"><h1>Registro creada</h1></div>';  
+            $mjs = "Creado";  
+            header("Location: http://localhost/ProyectosUcrAs/metricasEvaluacion/listaEspecifica/".$IdProyecto."?ms=$mjs"); 
+            exit();    
         }else{
-            $mensaje = '<div class="center mt-4 p-1 bg-danger text-white rounded"><h1>Registro no creado</h1></div>';  
+            $mjs = "No creado";  
+            header("Location: http://localhost/ProyectosUcrAs/metricasEvaluacion/listaEspecifica/".$IdProyecto."?ms=$mjs"); 
+            exit();    
         }
-        $this->view->mensaje = $mensaje;
-        $this->render();
     }   
 
 }

@@ -2,37 +2,27 @@
 class Tematicas extends Controller{
     function __construct(){
         parent::__construct();      //constructor de libs/controller
-        $this->view->list = [];
-        $this->view->mensaje = "";
     }
-
-    function render($param = null){
-        $tem = $this->model->getTematicas();
-        $this->view->list = $tem;
-        $this->view->render('tematica/lista.php');
+    //metodos para cargar y mover datos a las vistas
+    function listaEspecifica($param = null){
+        $conv = $this->model->getTematicasPr($param[0]);
+        $this->view->list = $conv;
+        $this->view->render('tematica/lista');
     }
-
-    function verTematica($param = null){
-        //param [0] es un identificador
-        $id= $param[0];
-        $idb= $param[1];
-        $enc = $this->model->searchTematica($id,$idb);
-
-        session_start();
-        $_SESSION['id'] = $id;
-        $_SESSION['idb'] = $idb;
-
-        //pasa a la view los datos
-        $this->view->item = $enc;
-        $this->view->mensaje = "";
-        $this->view->render('tematica/ver.php');
-
+    function editar($param = null){
+        $obs = $this->model->searchTematica($param[0],$_GET['idc']);
+        $this->view->item = $obs;
+        $this->view->render('tematica/editar');
     }
-
+    function agregar($param = null){
+        $obs = $param[0];
+        $this->view->id = $obs;
+        $this->view->render('tematica/agregar');
+    }
+    //metodos para transacciones de datos con el modelo
     function editarTematica(){
-        session_start();
-        $IdTematica     = $_SESSION['IdTematica'];
-        $IdProyecto     = $_SESSION['IdProyecto'];
+        $IdTematica     = $_POST['IdTematica'];
+        $IdProyecto     = $_POST['IdProyecto'];
         $Descripcion    = $_POST['Descripcion'];
 
         $arreglo = [
@@ -40,40 +30,35 @@ class Tematicas extends Controller{
             'IdProyecto'        => $IdProyecto,
             'Descripcion'       => $Descripcion
         ];
- 
-        unset_session($_SESSION['IdTematica'],$_SESSION['IdProyecto']);
 
         if($this->model->updateTematica($arreglo)){    
-            $tem = new Tematica();      
-
-            $tem->idTematica    = $IdTematica;
-            $tem->idProyecto    = $IdProyecto;
-            $tem->descripcion      = $Descripcion;
-            
-            $this->view->item = $tem;
-            $this->view->mensaje = '<div class="center mt-4 p-1 bg-primary text-white rounded"><h1>Registro Actualizado</h1></div>';  
+            $mjs = "Actualizado";  
+            header("Location: http://localhost/ProyectosUcrAs/tematicas/listaEspecifica/".$IdProyecto."?ms=$mjs"); 
+            exit();  
         }else{          
-            $this->view->mensaje = '<div class="center mt-4 p-1 bg-danger text-white rounded"><h1>Registro no se actualizo</h1></div>';  
+            $mjs = "No actualizado";  
+            header("Location: http://localhost/ProyectosUcrAs/tematicas/listaEspecifica/".$IdProyecto."?ms=$mjs"); 
+            exit();  
         }
-
-        $this->view->render('tematica/lista.php');
-
     }
 
     function borrarTematica($param = null){
-        $idc = $param[0];
-        $idp = $param[1];
+        $par = explode(',',$param[0]);
+        $sum = count($par);
+        $val = $sum -2;
+        $valOb = $sum -1;
+        $idp = $par[$val];
+        $ido = $par[$valOb];
       
-        if($this->model->deleteTematica($idc,$idp)){    
-             $mensaje = '<div class="center mt-4 p-1 bg-primary text-white rounded"><h1>Registro eliminado </h1></div>';  
-             $mensaje = "Borrado";
+        if($this->model->deleteTematica($idp,$ido)){    
+            $mjs = "No actualizado";  
+            header("Location: http://localhost/ProyectosUcrAs/tematicas/listaEspecifica/".$idp."?ms=$mjs"); 
+            exit();  
         }else{          
-             $mensaje = '<div class="center mt-4 p-1 bg-danger text-white rounded"><h1>No se logro borrar</h1></div>';  
-             $mensaje = "No Borrado";
+            $mjs = "No actualizado";  
+            header("Location: http://localhost/ProyectosUcrAs/tematicas/listaEspecifica/".$idp."?ms=$mjs"); 
+            exit();  
         }
-
-        echo $mensaje;
-        $this->render();
     }
 
     function agregarTematica(){
@@ -90,12 +75,15 @@ class Tematicas extends Controller{
 
         if($this->model->addTematica($arreglo)){
         
-            $mensaje = '<div class="center mt-4 p-1 bg-primary text-white rounded"><h1>Registro creada</h1></div>';  
+            $mjs = "Creado";  
+            header("Location: http://localhost/ProyectosUcrAs/tematicas/listaEspecifica/".$IdProyecto."?ms=$mjs"); 
+            exit();  
         }else{
-            $mensaje = '<div class="center mt-4 p-1 bg-danger text-white rounded"><h1>Registro no creado</h1></div>';  
+            $mjs = "No creado";  
+            header("Location: http://localhost/ProyectosUcrAs/tematicas/listaEspecifica/".$IdProyecto."?ms=$mjs"); 
+            exit();  
         }
-        $this->view->mensaje = $mensaje;
-        $this->render();
+
     }   
 
 

@@ -1,15 +1,29 @@
 <?php
+require_once('class/modalidad.php');
 class Modalidades extends Controller{
     function __construct(){
         parent::__construct();      //constructor de libs/controller
-        $this->view->list = [];
-        $this->view->mensaje = "";
     }
 
     function render($param = null){
         $dsp = $this->model->getModalidades();
         $this->view->item = $dsp;
-        $this->view->render('modalidad/lista.php');
+        $this->view->render('modalidad/lista');
+    }
+    function listaEspecifica($param = null){
+        $conv = $this->model->getModalidadesPr($param[0]);
+        $this->view->list = $conv;
+        $this->view->render('modalidad/lista');
+    }
+    function editar($param = null){
+        $obs = $this->model->searchModalidad($param[0],$_GET['idc']);
+        $this->view->item = $obs;
+        $this->view->render('modalidad/editar');
+    }
+    function agregar($param = null){
+        $obs = $param[0];
+        $this->view->id = $obs;
+        $this->view->render('modalidad/agregar');
     }
 
     function verModalidad($param = null){
@@ -26,10 +40,9 @@ class Modalidades extends Controller{
     }
 
     function editarModalidad(){
-        session_start();
 
-        $IdModalidad  = $_SESSION['IdModalidad'];
-        $IdProyecto   = $_SESSION['IdProyecto'];
+        $IdModalidad  = $_POST['IdModalidad'];
+        $IdProyecto   = $_POST['IdProyecto'];
         $Descripcion  = $_POST['Descripcion'];
 
         $arreglo = [
@@ -37,8 +50,6 @@ class Modalidades extends Controller{
             'IdProyecto'        => $IdProyecto,
             'Descripcion'       => $Descripcion
         ];
- 
-        unset_session($_SESSION['IdModalidad'],$_SESSION['IdProyecto']);
 
         if($this->model->updateModalidad($arreglo)){    
             $mod = new Modalidad();      
@@ -46,30 +57,33 @@ class Modalidades extends Controller{
             $mod->idProyecto = $IdProyecto;
             $mod->descripcion = $Descripcion;
             
-            $this->view->item = $mod;
-            $this->view->mensaje = '<div class="center mt-4 p-1 bg-primary text-white rounded"><h1>Registro actualizado</h1></div>';  
+            $mjs = "Actualizado";  
+            header("Location: http://localhost/ProyectosUcrAs/modalidades/listaEspecifica/".$IdProyecto."?ms=$mjs"); 
+            exit();   
         }else{          
-            $this->view->mensaje = '<div class="center mt-4 p-1 bg-danger text-white rounded"><h1>Registro no se actualizo</h1></div>';  
+            $mjs = "No actualizado";  
+            header("Location: http://localhost/ProyectosUcrAs/modalidades/listaEspecifica/".$IdProyecto."?ms=$mjs"); 
+            exit();  
         }
-
-        $this->view->render('modalidad/ver.php');
-
     }
 
     function borrarModalidad($param = null){
-        $idp = $param[0];
-        $idc = $param[1];
+        $par = explode(',',$param[0]);
+        $sum = count($par);
+        $val = $sum -2;
+        $valOb = $sum -1;
+        $idp = $par[$val];
+        $ido = $par[$valOb];
       
-        if($this->model->deleteModalidad($idp,$idc)){    
-             $mensaje = '<div class="center mt-4 p-1 bg-primary text-white rounded"><h1>Registro eliminado con ID: '.$idc.' PROYECTO :'.$idp.'</h1></div>';  
-             $mensaje = "Borrado";
+        if($this->model->deleteModalidad($idp,$ido)){    
+            $mjs = "Borrado";  
+            header("Location: http://localhost/ProyectosUcrAs/modalidades/listaEspecifica/".$idp."?ms=$mjs"); 
+            exit();  
         }else{          
-             $mensaje = '<div class="center mt-4 p-1 bg-danger text-white rounded"><h1>No se logro borrar</h1></div>';  
-             $mensaje = "No Borrado";
+            $mjs = "No borrado";  
+            header("Location: http://localhost/ProyectosUcrAs/meodalidades/listaEspecifica/".$idp."?ms=$mjs"); 
+            exit();  
         }
-
-        echo $mensaje;
-        $this->render();
     }
 
     function agregarModalidad(){
@@ -85,12 +99,14 @@ class Modalidades extends Controller{
         ];
         if($this->model->addModalidad($arreglo)){
         
-            $mensaje = '<div class="center mt-4 p-1 bg-primary text-white rounded"><h1>Registro creada</h1></div>';  
+            $mjs = "Creado";  
+            header("Location: http://localhost/ProyectosUcrAs/modalidades/listaEspecifica/".$IdProyecto."?ms=$mjs"); 
+            exit();  
         }else{
-            $mensaje = '<div class="center mt-4 p-1 bg-danger text-white rounded"><h1>Registro no creado</h1></div>';  
+            $mjs = "No creado";  
+            header("Location: http://localhost/ProyectosUcrAs/modalidades/listaEspecifica/".$IdProyecto."?ms=$mjs"); 
+            exit();    
         }
-        $this->view->mensaje = $mensaje;
-        $this->render();
     }   
 }
 ?>

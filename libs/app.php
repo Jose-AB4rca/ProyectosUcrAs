@@ -38,8 +38,7 @@ class App {
                     for($i = 2; $i < $nparam; $i++){
                         array_push($param, $url[$i]);
                     }
-                    // paginas/admin/create/
-                    // 0 admin/ 1 create/                    
+                 
                     $controller->{$url[1]}($param);
                 }else{
                     $controller->{$url[1]}();
