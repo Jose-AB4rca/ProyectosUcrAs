@@ -52,7 +52,7 @@
                 <tr>
                     <th>Cedula</th>
                     <th>Nombre</th>
-                    <th>Apeliidos</th>
+                    <th>Apellidos</th>
                     <th>Rol</th>
                     <th>Email</th>
                     <th>Fecha de registro</th>
