@@ -17,11 +17,11 @@
             <h1 class="mt-3" style="color: white;">Login</h1>
             <div class="mb-3 mt-3">
                 <label for="email" style="color: white;" class="form-label">Email:</label>
-                <input type="email" class="form-control" id="Email" placeholder="ejemplo@gmail.com" name="Email">
+                <input type="email" required class="form-control" id="Email" placeholder="ejemplo@gmail.com" name="Email">
             </div>
             <div class="mb-3">
                 <label for="pwd" style="color: white;" class="form-label mt-2">Password:</label>
-                <input type="password" class="form-control" id="Password" placeholder="contraseña" name="Password">
+                <input type="password" required class="form-control" id="Password" placeholder="contraseña" name="Password">
             </div>
             <button style="background-color: white;" type="submit" class="btn mt-4 mb-5">Iniciar sesión</button>
         </form> 
