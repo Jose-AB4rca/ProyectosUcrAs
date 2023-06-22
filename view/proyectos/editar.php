@@ -20,16 +20,16 @@
                 <div class="col-sm-6">
                     <div class="mb-3 mt-3">
                         <label for="Titulo" style="color: white;" class="form-label mt-2">Titulo:</label>
-                        <input type="text" class="form-control" id="Titulo" name="Titulo" value="<?php echo $this->item->titulo; ?>" required>
+                        <input type="text" class="form-control" id="Titulo" name="Titulo" value="<?php echo $this->item->titulo; ?>" maxlength="100" required>
                         <input type="hidden" class="form-control" id="IdProyecto" name="IdProyecto" value="<?php echo $this->item->idProyecto; ?>">
                     </div> 
                     <div class="mb-3">
                         <label for="Descripcion" style="color: white;">Descripción del proyecto</label>
-                        <textarea type="text" id="Descripcion" class= "form-control" name="Descripcion" rows="4" cols="40" required><?php echo $this->item->descripcion;?></textarea> 
+                        <textarea type="text" id="Descripcion" class= "form-control" name="Descripcion" rows="4" cols="40" maxlength="2500" required><?php echo $this->item->descripcion;?></textarea> 
                     </div>
                     <div class="mb-3">
                         <label for="pwd" style="color: white;" class="form-label mt-2">Encargado:</label>
-                        <input type="text" class="form-control" id="Encargado" name="Encargado" value="<?php echo $this->item->encargado; ?>" required>
+                        <input type="text" class="form-control" id="Encargado" name="Encargado" value="<?php echo $this->item->encargado; ?>" maxlength="100" required>
                     </div>  
                     <div class="mb-3">
                         <label for="Justificacion" style="color: white;">Justificacion</label>
@@ -47,7 +47,7 @@
                 <div class="col-sm-6">
                     <div class="mb-3 mt-3">
                         <label for="ObjetivoGeneral" style="color: white;" class="form-label mt-2">ObjetivoGeneral:</label>
-                        <input type="text" class="form-control" id="ObjetivoGeneral" name="ObjetivoGeneral" value="<?php echo $this->item->objetivoGeneral; ?>" required>
+                        <input type="text" class="form-control" id="ObjetivoGeneral" name="ObjetivoGeneral" value="<?php echo $this->item->objetivoGeneral; ?>" maxlength="150" required>
                     </div>
                     <div class="mb-3 mt-3">
                         <label for="Antecedentes" style="color: white;">Antecedentes</label>
@@ -67,13 +67,13 @@
                     </div>
                     <div class="mb-3">
                         <label for="Comentarios" style="color: white;"> Comentarios</label>
-                        <textarea type="text" class="form-control" name="Comentarios" id="Comentarios" rows="3" cols="40" required><?php echo $this->item->comentarios;?></textarea>
+                        <textarea type="text" class="form-control" name="Comentarios" id="Comentarios" rows="3" cols="40" maxlength="400" required><?php echo $this->item->comentarios;?></textarea>
                     </div>
                 </div>
            </div>
            <div class="d-flex justify-content-end">
            <button style="background-color: white;" type="submit" class="btn mt-4 mb-5">Editar el proyecto</button>
-           <a style="background-color: white; margin-left: 1rem;" href="<?php echo constant('URL');?>" type="button" class="btn mt-4 mb-5">Volver</a>
+           <a style="background-color: white; margin-left: 1rem;" href="<?php echo constant('URL');?>proyectos/lista" type="button" class="btn mt-4 mb-5">Volver</a>
            </div>  
         </form> 
     </div>

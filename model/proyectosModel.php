@@ -108,5 +108,36 @@
                 return false;
             }
         }
+
+        function getProyectosPr($nombre){
+            $items=[];
+            try{
+                $sql = $this->db->connect()->prepare('SELECT * FROM `proyectos`
+                WHERE `encargado`=:nom');
+                $sql->execute(['nom'=>$nombre]);
+                while($row = $sql->fetch()){
+                    $proyecto = new Proyecto();
+                    $proyecto->idProyecto = $row["idProyecto"];
+                    $proyecto->titulo = $row["titulo"];
+                    $proyecto->descripcion = $row["descripcion"];
+                    $proyecto->encargado = $row["encargado"];
+                    $proyecto->observaciones = $row["observaciones"];
+                    $proyecto->justificacion = $row["justificacion"];
+                    $proyecto->antecedentes = $row['antecedentes'];
+                    $proyecto->objetivoGeneral= $row['objetivoGeneral'];
+                    $proyecto->subActividadesSubstantivas = $row["subActividadesSubstantivas"];
+                    $proyecto->metodologia= $row['metodologia'];
+                    $proyecto->fechaInicio= $row['fechaInicio'];
+                    $proyecto->fechaFin= $row['fechaFin'];
+                    $proyecto->comentarios= $row['comentarios'];
+
+                    array_push($items,$proyecto);
+                }
+                return $items;
+            }catch(PDOException $e){
+                print_r('Error connection: ' . $e->getMessage());
+                return false;
+            }
+        }
     }
 ?>

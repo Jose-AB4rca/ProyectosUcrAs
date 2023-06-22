@@ -25,7 +25,7 @@
         <img src="../img/list2.jpg" alt="nf" style="max-width: 80px !important; max-height: 80px !important;">
           <p>En este apartado puedes monitorear a los distintos proyectos y ver más información de cada uno.</p> 
           <p class="text-wrap">Ver lista de proyectos en el sistema</p>
-            <a class="btn mt-auto mb-4" id="init"  href="<?php echo constant('URL');?>proyectos/lista">Ir a la lista</a>
+            <a class="btn mt-auto mb-4" id="init"  href="<?php echo constant('URL').'proyectos/listaPr/'.$_SESSION['NameUser'];?>">Ir a la lista</a>
         </div>
       </div>
     </div>

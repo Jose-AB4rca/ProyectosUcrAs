@@ -43,7 +43,17 @@
         <div class="container min-vh-100 h-100 bg-light" id="admin-cards">
             <br>
             <h2 class="text-center mb-3">Inscripción de actividades para el proyecto</h2>
-
+            <?php
+                if (isset($_SESSION['NameUser']) && $_SESSION['Rol'] != 1){
+            ?>
+                    <a style="background-color: white; margin-left: 1rem;" href="<?php echo constant('URL').'proyectos/listaPr/'.$_SESSION['NameUser'];?>" type="button" class="btn btn-info  mb-3">Volver</a>
+            <?php      
+                }else{
+            ?>
+                    <a style="background-color: white; margin-left: 1rem;" id="init" href="<?php echo constant('URL');?>" type="button" class="btn btn-info mb-2">Volver</a>
+            <?php
+                }
+           ?>
             <div class="mt-3 table-responsive text-center">          
             <table class="table display dt-responsive nowrap" id="table_id">
                 <thead>

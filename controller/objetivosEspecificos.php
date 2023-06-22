@@ -53,7 +53,7 @@ class ObjetivosEspecificos extends Controller{
             $pg = new ObjetivoEspecifico();
             $pg->idProyecto         = $IdProyecto;
             $pg->idObjetivoEsp      = $IdObjetivoEsp;
-            $pg->$objetivo          = $Objetivo; 
+            $pg->objetivo          = $Objetivo; 
 
             $mjs = "Actualizado";  
             header("Location: http://localhost/ProyectosUcrAs/objetivosEspecificos/listaEspecifica/".$IdProyecto."?ms=$mjs"); 
@@ -79,9 +79,6 @@ class ObjetivosEspecificos extends Controller{
             $mjs = "No borrado";  
             header("Location: http://localhost/ProyectosUcrAs/objetivosEspecificos/listaEspecifica/".$idp."?ms=$mjs"); 
         }
-
-        echo $mensaje;
-        $this->render();
     }
 
     function agregarObjetivoEsp(){

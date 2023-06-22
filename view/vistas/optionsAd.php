@@ -7,6 +7,17 @@
     <title></title>
 </head>
 <body>
+    <?php
+        //mensaje para comunicar un cambio o acción
+        if (isset($_GET['mss'])){
+    ?>
+        <div class="alert alert-dismissible center bg-primary text-center text-white rounded fade show mt-2">
+            <?php echo $_GET['mss'];?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    <?php    
+        }
+    ?>
 <section class="min-vh-100 h-100 bg-image" style="background-image: url('../img/p14.jpg');">
   <div class="container d-flex">
   <div class="row justify-content-center">

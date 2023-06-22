@@ -10,6 +10,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
 </head>
 <body>
+    <?php session_start(); ?>
 <div class="center bg-primary text-center text-white rounded"><?php echo $this->mensaje;?></div>   
 <div class="conatiner-fluid min-vh-100 d-flex justify-content-center bg-image" 
     style="background-image: url('../img/white-abstract.jpg');">
@@ -24,7 +25,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="pwd" style="color: white;" class="form-label mt-2">ID inscripción:</label>
-                        <input type="number" class="form-control" id="IdInscripcionAc" name="IdInscripcionAc" plsceholder="auto" readonly>
+                        <input type="number" class="form-control" id="IdInscripcionAc" name="IdInscripcionAc" placeholder="auto" readonly>
                     </div>
                     <div class="mb-3">
                         <label for="pwd" style="color: white;" class="form-label mt-2">Objetivo:</label>
@@ -60,7 +61,17 @@
            </div>
            <div class="d-flex justify-content-end">
            <button style="background-color: white;" type="submit" class="btn mt-4 mb-5">Crear</button>
-           <a style="background-color: white; margin-left: 1rem;" href="<?php echo constant('URL');?>" type="button" class="btn mt-4 mb-5">Volver</a>
+           <?php
+                if (isset($_SESSION['NameUser']) && $_SESSION['Rol'] != 1){
+            ?>
+                    <a style="background-color: white; margin-left: 1rem;" href="<?php echo constant('URL').'proyectos/listaPr/'.$_SESSION['NameUser'];?>" type="button" class="btn mt-4 mb-5">Volver</a>
+            <?php      
+                }else{
+            ?>
+                    <a style="background-color: white; margin-left: 1rem;" href="<?php echo constant('URL');?>" type="button" class="btn mt-4 mb-5">Volver</a>
+            <?php
+                }
+           ?>
            </div>  
         </form> 
     </div>

@@ -20,53 +20,53 @@
                 <div class="col-sm-6">
                     <div class="mb-3 mt-3">
                         <label for="Titulo" style="color: white;" class="form-label mt-2">Titulo:</label>
-                        <input type="text" class="form-control" id="Titulo" name="Titulo">
+                        <input type="text" class="form-control" id="Titulo" name="Titulo" maxlength="100" required>
                     </div> 
                     <div class="mb-3">
                         <label for="Descripcion" style="color: white;">Descripción del proyecto</label>
-                        <textarea id="Descripcion" class= "form-control" name="Descripcion" rows="4" cols="40"></textarea> 
+                        <textarea id="Descripcion" class= "form-control" name="Descripcion" rows="4" cols="40" maxlength="2500" required></textarea> 
                     </div>
                     <div class="mb-3">
                         <label for="pwd" style="color: white;" class="form-label mt-2">Encargado:</label>
-                        <input type="text" class="form-control" id="Encargado" name="Encargado">
+                        <input type="text" class="form-control" id="Encargado" name="Encargado" maxlength="100" required>
                     </div>  
                     <div class="mb-3">
                         <label for="Justificacion" style="color: white;">Justificacion</label>
-                        <textarea id="Justificacion" class= "form-control" name="Justificacion" rows="4" cols="40"></textarea> 
+                        <textarea id="Justificacion" class= "form-control" name="Justificacion" rows="4" cols="40" required></textarea> 
                     </div>                  
                     <div class="mb-3">
                         <label for="Metodologia" style="color: white;">Metodologia</label>
-                        <textarea id="Metodologia" class= "form-control" name="Metodologia" rows="3" cols="40"></textarea> 
+                        <textarea id="Metodologia" class= "form-control" name="Metodologia" rows="3" cols="40" required></textarea> 
                     </div>
                     <div class="mb-3">
                         <label for="FechaInicio" style="color: white;"> fecha de inicio</label>
-                        <input type="date" class="form-control" name="FechaInicio" id="FechaInicio">
+                        <input type="date" class="form-control" name="FechaInicio" id="FechaInicio" required>
                     </div>
                 </div>
                 <div class="col-sm-6">
                     <div class="mb-3 mt-3">
                         <label for="ObjetivoGeneral" style="color: white;" class="form-label mt-2">ObjetivoGeneral:</label>
-                        <input type="text" class="form-control" id="ObjetivoGeneral" name="ObjetivoGeneral">
+                        <input type="text" class="form-control" id="ObjetivoGeneral" name="ObjetivoGeneral" maxlength="150" required>
                     </div>
                     <div class="mb-3 mt-3">
                         <label for="Antecedentes" style="color: white;">Antecedentes</label>
-                        <textarea id="Antecedentes" class= "form-control" name="Antecedentes" rows="4" cols="40"></textarea> 
+                        <textarea id="Antecedentes" class= "form-control" name="Antecedentes" rows="4" cols="40" required></textarea> 
                     </div>
                     <div class="mb-3">
                         <label for="Observaciones" style="color: white;">Observaciones</label>
-                        <textarea id="Observaciones" class= "form-control" name="Observaciones" rows="4" cols="40"></textarea> 
+                        <textarea id="Observaciones" class= "form-control" name="Observaciones" rows="4" cols="40" maxlength="" required></textarea> 
                     </div>
                     <div class="mb-3">
                         <label for="SubActividadesSubstantivas" style="color: white;">Sub-actividades Substantivas</label>
-                        <textarea id="SubActividadesSubstantivas" class= "form-control" name="SubActividadesSubstantivas" rows="3" cols="40"></textarea> 
+                        <textarea id="SubActividadesSubstantivas" class= "form-control" name="SubActividadesSubstantivas" rows="3" cols="40" maxlength="200" required></textarea> 
                     </div>
                     <div class="mb-3">
                         <label for="FechaFin" style="color: white;"> fecha de finalización</label>
-                        <input type="date" class="form-control" name="FechaFin" id="FechaFin">
+                        <input type="date" class="form-control" name="FechaFin" id="FechaFin" required>
                     </div>
                     <div class="mb-3">
                         <label for="Comentarios" style="color: white;"> Comentarios</label>
-                        <textarea type="date" class="form-control" name="Comentarios" id="Comentarios" rows="3" cols="40"></textarea>
+                        <textarea type="date" class="form-control" name="Comentarios" id="Comentarios" rows="3" cols="40" maxlength="400" required></textarea>
                     </div>
                 </div>
            </div>

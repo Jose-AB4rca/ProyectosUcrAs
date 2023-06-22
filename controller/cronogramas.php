@@ -65,15 +65,6 @@ class Cronogramas extends Controller{
         ];
  
         if($this->model->updateCronograma($arreglo)){    
-            $crono = new Cronograma();      
-
-            $crono->idCronogram    = $IdCronograma;
-            $crono->idProyecto     = $IdProyecto;
-            $crono->tipo           = $Tipo;
-            $crono->actividad      = $Actividad;
-            $crono->fechaInicio    = $FechaInicio;
-            $crono->fechaFin       = $FechaFin;
-            $crono->descripcion    = $Descripcion;
             
             $mjs = "Editado";  
             header("Location: http://localhost/ProyectosUcrAs/cronogramas/listaEspecifica/".$IdProyecto."?ms=$mjs"); 

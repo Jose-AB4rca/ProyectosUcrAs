@@ -27,7 +27,16 @@
         require_once('view/menu.php');
     }
     ?>
-    
+    <?php
+            if(isset($_GET['url'])){
+                $par = explode('/',$_GET['url']);
+                $sum = count($par);
+                $num = $sum - 1;
+                $val = $par[$num];
+              }else{
+                $sum = 1;
+              }
+    ?>
     <?php
         //mensaje para comunicar un cambio o acción
         if (isset($_GET['ms'])){
@@ -43,15 +52,15 @@
         <div class="container min-vh-100 h-100 bg-light" id="admin-cards">
             <br>
             <h2 class="text-center mb-3">Anotaciones del proyecto</h2>
-
+            <a class="btn ms-3" id="init"  href="<?php echo constant('URL').'proyectos/opciones/'.$val;?>">volver</a>
             <div class="mt-3 table-responsive text-center">          
-            <table class="table display dt-responsive nowrap" id="table_id">
+            <table class="table display dt-responsive" id="table_id">
                 <thead>
                 <tr>
                     <th>ID de anotación</th>
                     <th>ID del proyecto</th>
                     <th>Documento</th>
-                    <th>Cedula de usuario</th>
+                    <th>Anotación</th>
                     <th>Opción</th>
                 </tr>
                 </thead>
@@ -64,8 +73,8 @@
                     <tr>
                         <td><?php echo $ob->idAnotacion;?></td>
                         <td><?php echo $ob->idProyecto;?></td>
-                        <td><?php echo $ob->documento;?></td>
-                        <td><?php echo $ob->cedulaUsuario;?></td>
+                        <td class="text-break"><?php echo $ob->documento;?></td>
+                        <td class="text-break"><?php echo $ob->anotacion;?></td>
                         <td>  
                             <a name="editar" id="editar" class="btn btn-warning m-1" href="<?php echo constant('URL').'anotaciones/editar/'.$ob->idProyecto.'?idc='.$ob->idAnotacion?>" role="button">editar</a>
                             <a name="del" id="del" onclick="deleteAn('<?php echo $ob->idProyecto;?>','<?php echo $ob->idAnotacion;?>')" class="btn btn-danger m-1"  role="button">eliminar</a>

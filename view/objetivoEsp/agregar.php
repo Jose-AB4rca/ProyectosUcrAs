@@ -12,7 +12,7 @@
 <body>
 <div class="center bg-primary text-center text-white rounded"><?php echo $this->mensaje;?></div>   
 <div class="conatiner-fluid min-vh-100 d-flex justify-content-center bg-image" 
-    style="background-image: url('../img/white-abstract.jpg');">
+    style="background-image: url('../../img/white-abstract.jpg');">
     <div class="row col-sm-10 bg-primary mb-5 mt-4 h-50">
         <form action="<?php echo constant('URL').'objetivosEspecificos/agregarObjetivoEsp';?>" method="post" style="text-align: center;">
            <h1 class="mt-3" style="color: white;">Crear un Objetivo</h1>
@@ -28,7 +28,7 @@
                     </div>                    
                     <div class="mb-3">
                         <label for="pwd" style="color: white;" class="form-label mt-2">Objetivo:</label>
-                        <textarea id="Objetivo" class= "form-control" name="Objetivo" rows="4" cols="40"></textarea> 
+                        <textarea id="Objetivo" class="form-control" name="Objetivo" rows="4" cols="40" maxlength="300" placeholder="máximo 300 letras" required></textarea> 
                     </div>
                 </div>
            </div>

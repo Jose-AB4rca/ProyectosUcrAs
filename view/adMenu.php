@@ -7,9 +7,35 @@
     <title></title>
 </head>
 <body>
+  <?php 
+    if(isset($_GET['url'])){
+      $par = explode('/',$_GET['url']);
+      $sum = count($par);
+    }else{
+      $sum = 1;
+    }
+    if($sum == 1){
+      $ruta= "img/4.png";
+     }
+    if($sum == 2){
+      $ruta = "../img/4.png";
+    }
+    if($sum == 3){
+      $ruta = "../../img/4.png";
+    }
+    if($sum == 4){
+      $ruta = "../../../img/4.png";
+    }
+    if($sum == 5){
+      $ruta = "../../../img/4.png";
+    }
+
+  ?>
 <nav class="navbar navbar-expand-sm" id="menusPry">
   <div class="container-fluid">
-    <a class="navbar-brand" href="<?php echo constant('URL');?>">byteSoftware</a>
+      <a class="navbar-brand" href="<?php echo constant('URL');?>">
+          <img class="img-fluid" src="<?php echo $ruta; ?>" width="100" height="86" alt="">
+      </a>
     <button class="navbar-toggler navbar-dark" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
       <span class="navbar-toggler-icon navbar-dark"></span>
     </button>

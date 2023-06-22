@@ -68,8 +68,6 @@ class MetasObjetivosEsp extends Controller{
             exit();  
         }
 
-        echo $mensaje;
-        $this->render();
     }
 
     function agregarMetasObjetivosEsp(){

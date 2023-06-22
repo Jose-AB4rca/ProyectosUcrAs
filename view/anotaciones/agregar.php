@@ -27,17 +27,17 @@
                     </div>
                     <div class="mb-3">
                         <label for="pwd" style="color: white;" class="form-label mt-2">Documento:</label>
-                        <input type="text" class="form-control" id="Documento" name="Documento">
+                        <input type="text" class="form-control" id="Documento" name="Documento" maxlength="300" required>
                     </div>                       
                     <div class="mb-3">
                         <label for="pwd" style="color: white;" class="form-label mt-2">Anotación:</label>
-                        <textarea id="Anotacion" class= "form-control" name="Anotacion" rows="4" cols="40"></textarea> 
+                        <textarea id="Anotacion" class= "form-control" name="Anotacion" rows="4" cols="40" maxlength="110" required></textarea> 
                     </div>
                     <div class="mb-3">
                         <label for="pwd" style="color: white;" class="form-label mt-2">Cedula usuario:</label>
-                        <input type="text" class="form-control" id="CedulaUsuario" name="CedulaUsuario">
+                        <input type="text" class="form-control" id="CedulaUsuario" name="CedulaUsuario" maxlength="45" required>
 
-                        <input type="" class="form-control" id="Fecha" name="Fecha" value="<?php echo(date('Y-m-d H:i:s'));?>">
+                        <input type="" class="form-control" id="Fecha" name="Fecha" value="<?php echo(date('Y-m-d H:i:s'));?>" hidden>
                     </div>   
                 </div>
            </div>

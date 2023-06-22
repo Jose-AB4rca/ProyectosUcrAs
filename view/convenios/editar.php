@@ -28,7 +28,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="pwd" style="color: white;" class="form-label mt-2">Convenios:</label>
-                        <textarea class= "form-control" id="Convenios" name="Convenios" rows="4" cols="40"><?php echo $this->item->convenios;?></textarea>
+                        <textarea class= "form-control" id="Convenios" name="Convenios" rows="4" cols="40" maxlength="200"><?php echo $this->item->convenios;?></textarea>
                     </div>                        
                 </div>
            </div>

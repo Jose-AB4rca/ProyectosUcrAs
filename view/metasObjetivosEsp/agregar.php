@@ -38,7 +38,7 @@
            </div>
            <div class="d-flex justify-content-end">
            <button style="background-color: white;" type="submit" class="btn mt-4 mb-5">Agregar</button>
-           <a style="background-color: white; margin-left: 1rem;" href="<?php echo constant('URL').'metasObjetivosEsp/listaEspecifica/'.$idObjetivoEsp;?>" type="button" class="btn mt-4 mb-5">Volver</a>
+           <a style="background-color: white; margin-left: 1rem;" href="<?php echo constant('URL');?>" type="button" class="btn mt-4 mb-5">Volver</a>
            </div>  
         </form> 
     </div>

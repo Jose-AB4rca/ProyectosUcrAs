@@ -42,8 +42,10 @@
     <section class="min-vh-100 h-100 bg-image" style="background-image: url('img/p14.jpg');">
         <div class="container min-vh-100 h-100 bg-light" id="admin-cards">
             <br>
-            <h2 class="text-center mb-3">Usuarios del sistema</h2>
-
+            <h1 class="text-center text-break pt-4">Usuarios registrados en el sistema</h1>
+            
+            <a class="btn ms-1" id="init"  href="<?php echo constant('URL');?>vistas/proyectos">Volver</a>
+           
             <div class="mt-3 table-responsive text-center">          
             <table class="table display dt-responsive nowrap" id="table_id">
                 <thead>

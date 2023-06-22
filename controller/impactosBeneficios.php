@@ -50,12 +50,12 @@ class ImpactosBeneficios extends Controller{
 
         if($this->model->updateImpactoB($arreglo)){
             $imp = new ImpactoBeneficio();
-                $imp->$idImpacto            = $IdImpacto;
-                $imp->$idProyecto           = $IdProyecto;
-                $imp->$cantPoblacion        = $CantPoblacion;
-                $imp->$poblacion            = $Poblacion;   
-                $imp->$beneficioUcr         = $BeneficioUcr;
-                $imp->$beneficioPoblacion   = $BeneficioPoblacion; 
+                $imp->idImpacto            = $IdImpacto;
+                $imp->idProyecto           = $IdProyecto;
+                $imp->cantPoblacion        = $CantPoblacion;
+                $imp->poblacion            = $Poblacion;   
+                $imp->beneficioUcr         = $BeneficioUcr;
+                $imp->beneficioPoblacion   = $BeneficioPoblacion; 
 
                 $mjs = "Actualizado";  
                 header("Location: http://localhost/ProyectosUcrAs/impactosBeneficios/listaEspecifica/".$IdProyecto."?ms=$mjs"); 

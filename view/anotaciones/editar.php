@@ -28,15 +28,15 @@
                     </div>
                     <div class="mb-3">
                         <label for="pwd" style="color: white;" class="form-label mt-2">Documento:</label>
-                        <input type="text" class="form-control" id="Documento" name="Documento" value="<?php echo $this->item->documento;?>" required>
+                        <input type="text" class="form-control" id="Documento" name="Documento" value="<?php echo $this->item->documento;?>" maxlength="300" required>
                     </div>                       
                     <div class="mb-3">
                         <label for="pwd" style="color: white;" class="form-label mt-2">Anotación:</label>
-                        <textarea id="Anotacion" class= "form-control" name="Anotacion" rows="4" cols="40" required><?php echo $this->item->anotacion;?></textarea> 
+                        <textarea id="Anotacion" class= "form-control" name="Anotacion" rows="4" cols="40" maxlength="110" required><?php echo $this->item->anotacion;?></textarea> 
                     </div>
                     <div class="mb-3">
                         <label for="pwd" style="color: white;" class="form-label mt-2">Cedula usuario:</label>
-                        <input type="text" class="form-control" id="CedulaUsuario" name="CedulaUsuario" value="<?php echo $this->item->cedulaUsuario;?>" readonly>
+                        <input type="text" class="form-control" id="CedulaUsuario" name="CedulaUsuario" maxlength="45" required value="<?php echo $this->item->cedulaUsuario;?>" readonly>
                     </div>   
                 </div>
            </div>

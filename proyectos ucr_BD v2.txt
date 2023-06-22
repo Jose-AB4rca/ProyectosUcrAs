@@ -197,10 +197,15 @@ CREATE TABLE `ucr_proyectos`.`usuarios` (
   `idRol` INT NOT NULL,
   `tipoRol` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idRol`));
+
+INSERT INTO `rol`(`idRol`, `tipoRol`) VALUES ('1','Administrador');
+INSERT INTO `rol`(`idRol`, `tipoRol`) VALUES ('2','Profesor');
   
-COMMIT;
 
 -- integridad referencial
+
+use ucr_proyectos;
+
 alter table descriptores add constraint fk_descriptores
 foreign key (idProyectos) references proyectos(idProyecto)
 ON DELETE CASCADE;

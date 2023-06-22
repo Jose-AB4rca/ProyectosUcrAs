@@ -50,6 +50,26 @@
             <div class="row">
                 <div class="col-sm-4 mt-2">
                     <article class="text-break">
+                        <h2 class="mt-2">Responsables</h2>   
+                        <br> 
+                        <?php
+                        foreach($this->res as $row){
+                            $ob = new Responsable();
+                            $ob = $row;
+                        ?>
+                        <tr>
+                            <p><?php echo $ob->responsable;?></p>
+                        </tr>
+                        <?php      
+                            }
+                        ?>
+                        <br>
+                    </article>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4 mt-2">
+                    <article class="text-break">
                         <h2 class="mt-2">Justificación</h2>   
                         <br> 
                         <p><?php echo $this->item->justificacion;?></p>
@@ -69,14 +89,42 @@
             </div>
             <div class="row">
                 <div class="col-sm-4 mt-2">
-                    <article class="text-break"> ---------------------
+                    <article class="text-break">
                         <h2 class="mt-2">Objetivos especificos</h2>   
                         <br> 
-                        <p><?php echo "algo";?></p>
+                        <?php
+                        foreach($this->obj as $row){
+                            $ob = new ObjetivoEspecifico();
+                            $ob = $row;
+                        ?>
+                        <tr>
+                            <p><?php echo $ob->objetivo;?></p>
+                        </tr>
+                        <?php      
+                            }
+                        ?>
                         <br>
                     </article>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-sm-4 mt-2">
+                    <article class="text-break"> 
+                        <h2 class="mt-2">Metas de objetivos especificicos</h2>   
+                        <?php
+                        foreach($this->metasO as $row){
+                            $ob = new MetaObjetivoEsp();
+                            $ob = $row;
+                        ?>
+                        <tr>
+                            <p><?php echo $ob->meta;?></p>
+                        </tr>
+                        <?php      
+                            }
+                        ?>
+                    </article>
+                </div>
+            </div>    
             <div class="row">
                 <div class="col-sm-4 mt-2">
                     <article class="text-break">
@@ -126,12 +174,44 @@
                         <br>
                     </article>
                 </div>
-            </div>       
+            </div>     
+            <div class="row">
+                <div class="col-sm-4 mt-2">
+                    <article class="text-break"> 
+                        <h2 class="mt-2">Area de impacto</h2>   
+                        <?php
+                        foreach($this->areaI as $row){
+                            $ob = new AreaImpacto();
+                            $ob = $row;
+                        ?>
+                        <tr>
+                            <p><?php echo $ob->area;?></p>
+                        </tr>
+                        <?php      
+                            }
+                        ?>
+                    </article>
+                </div>
+            </div>    
+            <div class="row">
+                <div class="col-sm-4 mt-2">
+                    <article class="text-break"> 
+                        <h2 class="mt-2">Anotaciones</h2>   
+                        <?php
+                        foreach($this->anota as $row){
+                            $ob = new Anotacion();
+                            $ob = $row;
+                        ?>
+                        <tr>
+                            <p><?php echo $ob->anotacion;?></p>
+                        </tr>
+                        <?php      
+                            }
+                        ?>
+                    </article>
+                </div>
+            </div>    
      </div>
 </div>
-<script type="text/javascript">
-function actualizar(){location.reload(true);}
-setInterval("actualizar()",18000);
-</script>
 </body>
 </html>

@@ -33,7 +33,7 @@ class EncargadoActividades extends Controller{
 
             $enc->idEncargado     = $IdEncargado;
             $enc->idInscripcionAc    = $IdInscripcionAc;
-            $enc->CedulaEncargado      = $CedulaEncargado;
+            $enc->cedulaEncargado      = $CedulaEncargado;
             
             $this->view->item = $enc;
             $this->view->mensaje = '<div class="center mt-4 p-1 bg-primary text-white rounded"><h1>Registro Actualizado</h1></div>';  

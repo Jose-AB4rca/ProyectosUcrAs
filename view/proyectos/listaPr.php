@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista</title>
+    <title>Lista profesor</title>
     <link rel="stylesheet" href="../../css/styles.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
@@ -27,18 +27,7 @@
         require_once('view/menu.php');
     }
     ?>
-        <?php
-            if(isset($_GET['url'])){
-                $par = explode('/',$_GET['url']);
-                $sum = count($par);
-                $num = $sum - 1;
-                $val = $par[$num];
-              }else{
-                $sum = 1;
-              }
-    ?>
     <?php
-        //mensaje para comunicar un cambio o acción
         if (isset($_GET['ms'])){
     ?>
         <div class="alert alert-dismissible center bg-primary text-center text-white rounded fade show mt-2">
@@ -50,35 +39,34 @@
     ?>
     <section class="min-vh-100 h-100 bg-image" style="background-image: url('img/p14.jpg');">
         <div class="container min-vh-100 h-100 bg-light" id="admin-cards">
-            <br>
-            <h2 class="text-center mb-3">Metricas de evaluación del proyecto</h2>
-            <a class="btn ms-3" id="init"  href="<?php echo constant('URL').'proyectos/opciones/'.$val;?>">volver</a>
+            <h2 class="text-center pt-5">Proyectos asociados al profesor</h2>
             <div class="mt-3 table-responsive text-center">          
-            <table class="table display dt-responsive nowrap" id="table_id">
+            <table class="table display dt-responsive" id="table_id">
                 <thead>
                 <tr>
-                    <th>ID Proyecto / metrica</th>
-                    <th>Evaluacion proyecto</th>
-                    <th>Evaluacion del impacto</th>
-                    <th>Evaluación de participantes</th>
-                    <th>Opciones</th>
+                    <th>ID</th>
+                    <th>Titulo</th>
+                    <th>Encargado</th>
+                    <th>Obj. general</th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
                     <?php
                         foreach($this->list as $row){
-                            $ob = new MetricaEvaluacion();
-                            $ob = $row;
+                            $pry = new Proyecto();
+                            $pry = $row;
                     ?>
                     <tr>
-                        <td><?php echo $ob->idProyecto." - ".$ob->idMetrica;?></td>
-                        <td><?php echo $ob->evaluacionProyecto;?></td>
-                        <td><?php echo $ob->evaluacionImpacto;?></td>
-                        <td><?php echo $ob->evaluacionParticipante;?></td>
-                        <td>  
-                            <a name="editar" id="editar" class="btn btn-warning m-1" href="<?php echo constant('URL').'metricasEvaluacion/editar/'.$ob->idProyecto.'?idc='.$ob->idMetrica?>" role="button">editar</a>
-                            <a name="del" id="del" onclick="deletefina('<?php echo $ob->idProyecto;?>','<?php echo $ob->idMetrica;?>')" class="btn btn-danger m-1"  role="button">eliminar</a>
-                        </td>
+                    <td><?php echo $pry->idProyecto;?></td>
+                    <td><?php echo $pry->titulo;?></td>
+                    <td><?php echo $pry->encargado;?></td>
+                    <td><?php echo $pry->objetivoGeneral;?></td>
+                    <td>  
+                        <a name="ver" id="ver" class="btn btn-warning m-1" href="<?php echo constant('URL').'proyectos/ver/'.$pry->idProyecto; ?>" role="button">Ver</a>
+                        <a class="btn btn-info" href="<?php echo constant('URL').'inscripcionActividades/agregar/'.$pry->idProyecto.'?user='.$_SESSION['NameUser'];?>">Agregar actividad</a>
+                        <a class="btn  btn-success" href="<?php echo constant('URL').'inscripcionActividades/listaEspecifica/'.$pry->idProyecto;?>">Lista</a>
+                    </td>
                     </tr>
                 <?php      
                     }
@@ -88,15 +76,6 @@
         </div>
         </div>
     </section>
-        <script>
-              function deletefina(idp,ido) {
-                const data = [idp,ido];
-                if (confirm("Deseas borrar la metrica: ".concat(data[1]).concat(" ?"))) {
-                    location.href = "<?php echo constant('URL').'metricasEvaluacion/borrarMetricaEva/';?>".concat(data);
-                }
-            }
-        </script>
-        </script>
         <script>
             $('#table_id').DataTable( {
                 responsive: true,

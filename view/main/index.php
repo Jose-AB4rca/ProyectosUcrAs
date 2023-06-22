@@ -38,11 +38,14 @@
         }
     ?>
     <section class="min-vh-100 h-100 bg-image" style="background-image: url('img/p14.jpg');">
+    
+    <div class="container bg-light" id="admin-cards" style="max-height:220px;">
+        <img src="img/2016_horizontal.png" class="img-fluid p-2" alt="not found" style="max-height:160px; min-width:100%;">
+    </div>
         <div class="container min-vh-100 h-100 bg-light" id="admin-cards">
-            <h2 class="text-center mb-3">Proyectos de acción social</h2>
-
+            <h2 class="text-center pt-5">Proyectos registrados en el sistema</h2>
             <div class="mt-3 table-responsive text-center">          
-            <table class="table display dt-responsive nowrap" id="table_id">
+            <table class="table display dt-responsive" id="table_id">
                 <thead>
                 <tr>
                     <th>ID</th>
@@ -92,8 +95,6 @@
                     }
                 } );
         </script>
-        <script src="js/msj.js"></script>
-        <div class="msj" id="msj"><span>txt</span></div>
 </body>
 </html>
 

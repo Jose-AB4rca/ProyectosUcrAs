@@ -234,9 +234,5 @@
             }
         }
     </script>
-<script type="text/javascript">
-function actualizar(){location.reload(true);}
-setInterval("actualizar()",18000);
-</script>
 </body>
 </html>

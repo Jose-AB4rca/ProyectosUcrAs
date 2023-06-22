@@ -33,8 +33,25 @@
                     <div class="mb-3">
                         <label for="rols" style="color: white;" class="form-label mt-2">Rol:</label>
                         <select class="form-control" id="rols" name="Rol" id="Rol">
-                            <option value="1">Administrador</option>
-                            <option value="2">Profesor</option>
+                            <?php
+                                 session_start();
+                                 if(isset($_SESSION['cedula'])){
+                                     if(isset($_SESSION['Rol']) && $_SESSION['Rol'] == '1'){
+                             ?>     
+                                    <option value="1">Administrador</option>
+                                    <option value="2">Profesor</option>
+                             <?php       
+                                     }else{
+                              ?>
+                                    <option value="2">Profesor</option>
+                              <?Php          
+                                     }
+                                 }else{
+                              ?>      
+                                    <option value="2">Profesor</option>
+                            <?php        
+                                 }
+                            ?>
                         </select>
                     </div>
                 </div>

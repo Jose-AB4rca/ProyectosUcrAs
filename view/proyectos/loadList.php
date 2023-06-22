@@ -39,10 +39,10 @@
                         <td><?php echo $pry->idProyecto;?></td>
                         <td><?php echo $pry->titulo;?></td>
                         <td><?php echo $pry->encargado;?></td>
-                        <td><?php echo $pry->objetivoGeneral;?></td>
+                        <td class="text-break"><?php echo $pry->objetivoGeneral;?></td>
                         <td class="text-break"><?php echo $pry->descripcion;?></td>
                         <td>
-                        <a name="eliminar" id="eliminar" class="btn btn-info m-1" href="<?php echo constant('URL').'proyectos/verProyecto/'.$pry->idProyecto; ?>" role="button">Ver</a>    
+                        <a name="eliminar" id="eliminar" class="btn btn-info m-1" href="<?php echo constant('URL').'proyectos/ver/'.$pry->idProyecto; ?>" role="button">Ver</a>    
                         <a name="editar" id="editar" class="btn btn-warning m-1" href="<?php echo constant('URL').'proyectos/editar/'.$pry->idProyecto; ?>" role="button">Actualizar</a>
                         <a name="editar" id="editar" class="btn btn-success m-1" href="<?php echo constant('URL').'proyectos/opciones/'.$pry->idProyecto; ?>" role="button">Agregar datos</a></td>
                         

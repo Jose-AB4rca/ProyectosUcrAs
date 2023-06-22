@@ -29,20 +29,11 @@
         require_once('view/menu.php');
     }
 ?>
-    <?php
-        //mensaje para comunicar un cambio o acción
-        if (isset($_GET['mss'])){
-    ?>
-        <div class="alert alert-dismissible center bg-primary text-center text-white rounded fade show mt-2">
-            <?php echo $_GET['mss'];?>
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        </div>
-    <?php    
-        }
-    ?>
     <section class="min-vh-100 h-100 bg-image" style="background-image: url('../img/p14.jpg');">
         <div class="container min-vh-100 h-100 bg-light" id="admin-cards">
-            <h1 class="text-center text-break">Proyectos inscritos en el sistema</h1>
+            <h1 class="text-center text-break pt-4">Proyectos inscritos en el sistema</h1>
+            <p class="text-center text-break">Busca proyectos por titulo</p>
+            <a class="btn ms-3" id="init"  href="<?php echo constant('URL');?>vistas/proyectos">Volver</a>
 
         <div class="container mt-3">
             <br></br>
