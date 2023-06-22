@@ -20,15 +20,15 @@
                 <div class="col-sm-6">
                     <div class="mb-3 mt-3">
                         <label for="cedula" style="color: white;" class="form-label">Cedula:</label>
-                        <input type="number" class="form-control" id="Cedula" name="Cedula">
+                        <input type="number" required class="form-control" id="Cedula" name="Cedula">
                     </div>
                     <div class="mb-3">
                         <label for="pwd" style="color: white;" class="form-label mt-2">Nombre:</label>
-                        <input type="text" class="form-control" id="Nombre" name="Nombre">
+                        <input type="text" required class="form-control" id="Nombre" name="Nombre">
                     </div>                    
                     <div class="mb-3">
                         <label for="pwd" style="color: white;" class="form-label mt-2">apellidos:</label>
-                        <input type="text" class="form-control" id="Apellidos" name="Apellidos">
+                        <input type="text" required class="form-control" id="Apellidos" name="Apellidos">
                     </div>
                     <div class="mb-3">
                         <label for="rols" style="color: white;" class="form-label mt-2">Rol:</label>
@@ -58,20 +58,20 @@
                 <div class="col-sm-6">
                     <div class="mb-3 mt-3">
                         <label for="email" style="color: white;" class="form-label">Email:</label>
-                        <input type="email" class="form-control" id="Email" name="Email" placeholder="ejemplo@gmail.com">
+                        <input type="email" required class="form-control" id="Email" name="Email" placeholder="ejemplo@gmail.com">
                     </div>
                     <div class="mb-3">
                         <label for="pwd" style="color: white;" class="form-label mt-2">Password:</label>
-                        <input type="password" class="form-control" id="Password" name="Password">
+                        <input type="password" required class="form-control" id="Password" name="Password">
                     </div>
                     <div class="mb-3">
                         <label for="pwd" style="color: white;" class="form-label mt-2">Estado</label>
-                        <input type="text" class="form-control" id="Estado" name="Estado">
+                        <input type="text" required class="form-control" id="Estado" name="Estado">
                     </div>
                     <div class="mb-3">
                         <label for="pwd" style="color: white;" class="form-label mt-2">Fecha registro:</label>
                         <?php date_default_timezone_set('America/Costa_Rica');?>
-                        <input type="" class="form-control" id="FechaRegistro" value="<?php echo(date("Y-m-d H:i:s"));?>" default="<?php echo(date("Y-m-d H:i:s"));?>" name="FechaRegistro" disabled>
+                        <input type="" required class="form-control" id="FechaRegistro" value="<?php echo(date("Y-m-d H:i:s"));?>" default="<?php echo(date("Y-m-d H:i:s"));?>" name="FechaRegistro" disabled>
                     </div>
                 </div>
            </div>
