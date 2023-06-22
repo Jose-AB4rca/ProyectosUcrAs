@@ -27,16 +27,6 @@
         require_once('view/menu.php');
     }
     ?>
-        <?php
-            if(isset($_GET['url'])){
-                $par = explode('/',$_GET['url']);
-                $sum = count($par);
-                $num = $sum - 1;
-                $val = $par[$num];
-              }else{
-                $sum = 1;
-              }
-    ?>
     <?php
         //mensaje para comunicar un cambio o acción
         if (isset($_GET['ms'])){
@@ -52,9 +42,9 @@
         <div class="container min-vh-100 h-100 bg-light" id="admin-cards">
             <br>
             <h2 class="text-center mb-3">Objetivos especificos del proyecto</h2>
-            <a class="btn ms-3" id="init"  href="<?php echo constant('URL').'proyectos/opciones/'.$val;?>">volver</a>
+            <a class="btn ms-3" id="init"  href="<?php echo constant('URL').'vistas/proyectos';?>">volver</a>
             <div class="mt-3 table-responsive text-center">          
-            <table class="table display dt-responsive nowrap" id="table_id">
+            <table class="table display dt-responsive" id="table_id">
                 <thead>
                 <tr>
                     <th>ID del proyecto</th>
@@ -72,7 +62,7 @@
                     <tr>
                         <td><?php echo $ob->idProyecto;?></td>
                         <td><?php echo $ob->idObjetivoEsp;?></td>
-                        <td><?php echo $ob->objetivo;?></td>
+                        <td class="text-break"><?php echo $ob->objetivo;?></td>
                         <td>  
                             <a name="editar" id="editar" class="btn btn-warning m-1" href="<?php echo constant('URL').'objetivosEspecificos/edit/'.$ob->idProyecto.'?idc='.$ob->idObjetivoEsp?>" role="button">editar</a>
                             <a name="del" id="del" onclick="deleteObs('<?php echo $ob->idProyecto;?>','<?php echo $ob->idObjetivoEsp;?>')" class="btn btn-danger m-1"  role="button">eliminar</a>

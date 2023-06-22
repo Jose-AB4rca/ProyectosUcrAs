@@ -7,7 +7,7 @@ class FinanciamientosModel extends Model{
 
     function addFinanciamiento($data){
         try{
-            $sql = $this->db->connect()->prepare('INSERT INTO `financiamiento`(`idFinanciamiento`, `idProyecto`, `tipo`, `descripcion`, `costo`, `tipoCosto`, `justificaFi`) 
+            $sql = $this->db->connect()->prepare('INSERT INTO `financiamiento` (`idFinanciamiento`, `idProyecto`, `tipo`, `descripcion`, `costo`, `tipoCosto`, `justificaFi`) 
             VALUES (:IdFinanciamiento,:IdProyecto,:Tipo,:Descripcion,:Costo,:TipoCosto,:JustificaFi)');
             $sql->execute($data); 
             return true;

@@ -52,9 +52,9 @@
         <div class="container min-vh-100 h-100 bg-light" id="admin-cards">
             <br>
             <h2 class="text-center mb-3">Metas para los objetivos</h2>
-            <a class="btn ms-3" id="init"  href="<?php echo constant('URL').'proyectos/opciones/'.$val;?>">volver</a>
+            <a class="btn ms-3" id="init"  href="<?php echo constant('URL').'vistas/proyectos';?>">volver</a>
             <div class="mt-3 table-responsive text-center">          
-            <table class="table display dt-responsive nowrap" id="table_id">
+            <table class="table display dt-responsive" id="table_id">
                 <thead>
                 <tr>
                     <th>ID objetivo esp / meta</th>
@@ -71,7 +71,7 @@
                     ?>
                     <tr>
                         <td><?php echo $ob->idObjetivoEsp." - ".$ob->idMeta;?></td>
-                        <td><?php echo $ob->meta;?></td>
+                        <td class="text-break"><?php echo $ob->meta;?></td>
                         <td><?php echo $ob->indicador;?></td>
                         <td>  
                             <a name="editar" id="editar" class="btn btn-warning m-1" href="<?php echo constant('URL').'metasObjetivosEsp/editar/'.$ob->idObjetivoEsp.'?idc='.$ob->idMeta;?>" role="button">editar</a>

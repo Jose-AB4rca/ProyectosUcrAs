@@ -23,7 +23,7 @@
                         <input type="number" class="form-control" id="IdProyecto" name="IdProyecto" value="<?php echo $this->id;?>" readonly>
                     </div>
                     <div class="mb-3">
-                        <label for="pwd" style="color: white;" class="form-label mt-2">ID ente externo relacionado:</label>
+                        <label for="pwd" style="color: white;" class="form-label mt-2">ID de financiamiento:</label>
                         <input type="number" class="form-control" id="IdFinanciamiento" name="IdFinanciamiento" placeholder="auto" readonly>
                     </div>
                     <div class="mb-3">

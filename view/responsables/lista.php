@@ -52,7 +52,7 @@
         <div class="container min-vh-100 h-100 bg-light" id="admin-cards">
             <br>
             <h2 class="text-center mb-3">Responsables del proyecto</h2>
-            <a class="btn ms-3" id="init"  href="<?php echo constant('URL').'proyectos/opciones/'.$val;?>">volver</a>
+            <a class="btn ms-3" id="init"  href="<?php echo constant('URL').'vistas/proyectos';?>">volver</a>
             <div class="mt-3 table-responsive text-center">          
             <table class="table display dt-responsive" id="table_id">
                 <thead>
