@@ -48,7 +48,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-sm-4 mt-2">
+                <div class="col-sm-12 mt-2">
                     <article class="text-break">
                         <h2 class="mt-2">Responsables</h2>   
                         <br> 
@@ -68,7 +68,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-sm-4 mt-2">
+                <div class="col-sm-12 mt-2">
                     <article class="text-break">
                         <h2 class="mt-2">Justificación</h2>   
                         <br> 
@@ -78,7 +78,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-sm-4 mt-2">
+                <div class="col-sm-12 mt-2">
                     <article class="text-break">
                         <h2 class="mt-2">Objetivo general</h2>   
                         <br> 
@@ -88,7 +88,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-sm-4 mt-2">
+                <div class="col-sm-12 mt-2">
                     <article class="text-break">
                         <h2 class="mt-2">Objetivos especificos</h2>   
                         <br> 
@@ -108,7 +108,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-sm-4 mt-2">
+                <div class="col-sm-12 mt-2">
                     <article class="text-break"> 
                         <h2 class="mt-2">Metas de objetivos especificicos</h2>   
                         <?php
@@ -126,7 +126,7 @@
                 </div>
             </div>    
             <div class="row">
-                <div class="col-sm-4 mt-2">
+                <div class="col-sm-12 mt-2">
                     <article class="text-break">
                         <h2 class="mt-2">Antecedentes</h2>   
                         <br> 
@@ -136,7 +136,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-sm-4 mt-2">
+                <div class="col-sm-12 mt-2">
                     <article class="text-break">
                         <h2 class="mt-2">Metodología</h2>   
                         <br> 
@@ -146,7 +146,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-sm-4 mt-2">
+                <div class="col-sm-12 mt-2">
                     <article class="text-break">
                         <h2 class="mt-2">Sub-actividades sustantivas</h2>   
                         <br> 
@@ -166,7 +166,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-sm-4 mt-2">
+                <div class="col-sm-12 mt-2">
                     <article class="text-break"> 
                         <h2 class="mt-2">Comentarios</h2>   
                         <br> 
@@ -176,7 +176,7 @@
                 </div>
             </div>     
             <div class="row">
-                <div class="col-sm-4 mt-2">
+                <div class="col-sm-12 mt-2">
                     <article class="text-break"> 
                         <h2 class="mt-2">Area de impacto</h2>   
                         <?php
@@ -194,7 +194,7 @@
                 </div>
             </div>    
             <div class="row">
-                <div class="col-sm-4 mt-2">
+                <div class="col-sm-12 mt-2">
                     <article class="text-break"> 
                         <h2 class="mt-2">Anotaciones</h2>   
                         <?php
