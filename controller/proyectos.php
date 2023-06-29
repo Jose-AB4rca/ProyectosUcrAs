@@ -6,8 +6,6 @@ include_once('model/areasImpactoModel.php');
 include_once('model/descriptoresModel.php');
 include_once('model/responsablesModel.php');
 include_once('model/metasObjetivosEspModel.php');
-
-
 class Proyectos extends Controller{
     function __cosntruct(){
         parent::__construct();
@@ -47,6 +45,15 @@ class Proyectos extends Controller{
         $this->view->render('proyectos/pryOptions');
     }
     function ver($param = null){
+        include_once('model/anotacionesModel.php');
+        include_once('model/objetivosEspecificosModel.php');
+        include_once('model/conveniosModel.php');
+        include_once('model/areasImpactoModel.php');
+        include_once('model/descriptoresModel.php');
+        include_once('model/responsablesModel.php');
+        include_once('model/impactosBeneficiosModel.php');
+        include_once('model/financiamientosModel.php');
+
         $pry = $this->model->searchProyecto($param[0]);
         $rel1 = new AnotacionesModel();
         $rel2 = new ObjetivosEspecificosModel();
@@ -54,15 +61,17 @@ class Proyectos extends Controller{
         $rel4 = new AreasImpactoModel();
         $rel5 = new DescriptoresModel();
         $rel6 = new ResponsablesModel();
-        $rel7 = new MetasObjetivosEspModel();
+        $rel7 = new ImpactosBeneficiosModel();
+        $rel8 = new FinanciamientosModel();
 
         $a = $rel1->getAnotacionesProyecto($param[0]);
         $b = $rel3->getConveniosPr($param[0]);
-        $c=  $rel2->getPryObjetivosEsp($param[0]);
+        $c = $rel2->getPryObjetivosEsp($param[0]);
         $d = $rel4->getAreaImpactoPr($param[0]);
         $e = $rel5->getDescriptoresPr($param[0]);
         $f = $rel6->getResponsablesPr($param[0]);
-        $g = $rel7->getMetasObjetivosEspPr($param[0]);
+        $impact = $rel7->getImpactosBPr($param[0]);
+        $financia = $rel8->getFinanciamientosPr($param[0]);
         
         $this->view->item = $pry;
         $this->view->anota = $a;
@@ -71,7 +80,8 @@ class Proyectos extends Controller{
         $this->view->areaI = $d;
         $this->view->desc = $e;
         $this->view->res = $f;
-        $this->view->metasO = $g;
+        $this->view->impactoB = $impact;
+        $this->view->finan = $financia;
 
         $this->view->mensaje = "";
         $this->view->render('proyectos/ver');
@@ -187,12 +197,13 @@ class Proyectos extends Controller{
    }
    function eliminarProyecto($param = null){
         if($this->model->deleteProyecto($param[0])){
-            $mensaje = '<div class="center mt-4 p-1 bg-primary text-white rounded"><h1>Proyecto eliminado</h1></div>';  
+            $mensaje = "Proyecto borrado";  
+            header("Location: http://localhost/ProyectosUcrAs/vistas/proyectos?mss=$mensaje");
             
         }else{
-            $mensaje = '<div class="center mt-4 p-1 bg-primary text-white rounded"><h1>Proyecto no eliminado</h1></div>';  
+            $mensaje = "Proyecto no borrado";
+            header("Location: http://localhost/ProyectosUcrAs/vistas/proyectos?mss=$mensaje");
         }
-        $this->render();
    }
 
 }

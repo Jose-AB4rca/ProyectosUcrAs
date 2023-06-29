@@ -99,7 +99,7 @@
         <script>
               function deleteDis(idp,ido) {
                 const data = [idp,ido];
-                if (confirm("Deseas borrar el objetivo especifico: ".concat(data[1]).concat(" ?"))) {
+                if (confirm("Deseas borrar la inscripción: ".concat(data[1]).concat(" ?"))) {
                     location.href = "<?php echo constant('URL').'inscripcionActividades/eliminarInscripcionAc/';?>".concat(data);
                 }
             }

@@ -33,7 +33,7 @@ class descriptoresModel extends Model{
         try{
             $sql = $this->db->connect()->prepare('DELETE FROM `descriptores` 
             WHERE `idProyectos`=:IdProyectos AND `idDescriptor`=:IdDescriptor');
-            $sql->execute(array('IdProyecto'=>$idp,'IdDescriptor'=>$idd));
+            $sql->execute(array('IdProyectos'=>$idp,'IdDescriptor'=>$idd));
             return true;
         }catch(PDOException $e){
             print_r('Error connection: ' . $e->getMessage());
@@ -85,7 +85,7 @@ class descriptoresModel extends Model{
             while($row = $sql->fetch()){
                 $descrip = new Descriptor();
                 $descrip->idProyectos  = $row['idProyecto'];
-                $descrip->idDescripto  = $row['idDescriptor'];
+                $descrip->idDescriptor  = $row['idDescriptor'];
                 $descrip->descriptor   = $row['descriptor'];
                 array_push($items,$descrip);
             }

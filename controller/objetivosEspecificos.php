@@ -2,8 +2,6 @@
 class ObjetivosEspecificos extends Controller{
     function __construct(){
         parent::__construct(); //constructor de libs/controller
-        $this->view->list = [];
-        $this->view->mensaje = "";
     }
     // metodos para dar a view datos y cargar vistas
     function render(){

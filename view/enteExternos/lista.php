@@ -91,7 +91,7 @@
         <script>
               function deleteEnte(idp,ido) {
                 const data = [idp,ido];
-                if (confirm("Deseas borrar el objetivo especifico: ".concat(data[1]).concat(" ?"))) {
+                if (confirm("Deseas borrar el ente externo: ".concat(data[1]).concat(" ?"))) {
                     location.href = "<?php echo constant('URL').'enteExternos/borrarEnteExt/';?>".concat(data);
                 }
             }

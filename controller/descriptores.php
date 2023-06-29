@@ -80,7 +80,7 @@ class Descriptores extends Controller{
         $idp = $par[$val];
         $ido = $par[$valOb];
       
-        if($this->model->deleteCronograma($idp,$ido)){    
+        if($this->model->deleteDescriptor($idp,$ido)){    
             $mjs = "Borrado";  
             header("Location: http://localhost/ProyectosUcrAs/descriptores/listaEspecifica/".$idp."?ms=$mjs"); 
             exit();  

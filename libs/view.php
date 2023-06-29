@@ -15,7 +15,7 @@ class View{
     public $finan;
     public $impactoB;
     public $inscribir;
-    public $metasO;
+    //public $metasO;
     public $metric;
     public $res;
     public $tema;

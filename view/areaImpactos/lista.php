@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anotaciones</title>
+    <title>Lista</title>
     <link rel="stylesheet" href="../../css/styles.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
@@ -76,7 +76,7 @@
                         <td><?php echo $ob->idArea;?></td>
                         <td><?php echo $ob->area;?></td>
                         <td>  
-                            <a name="editar" id="editar" class="btn btn-warning m-1" href="<?php echo constant('URL').'areasImpacto/editar/'.$ob->idImpacto.'?idc='.$ob->idArea?>" role="button">editar</a>
+                            <a name="editar" id="editar" class="btn btn-warning m-1" href="<?php echo constant('URL').'areasImpacto/editar/'.$ob->idArea.'?idc='.$ob->idImpacto?>" role="button">editar</a>
                             <a name="del" id="del" onclick="deleteAn('<?php echo $ob->idImpacto;?>','<?php echo $ob->idArea;?>')" class="btn btn-danger m-1"  role="button">eliminar</a>
                         </td>
                     </tr>
@@ -91,7 +91,7 @@
         <script>
               function deleteAn(idp,ido) {
                 const data = [idp,ido];
-                if (confirm("Deseas borrar el objetivo área: ".concat(data[1]).concat(" ?"))) {
+                if (confirm("Deseas borrar el área-impacto: ".concat(data[1]).concat(" ?"))) {
                     location.href = "<?php echo constant('URL').'areasImpacto/eliminarAreaImpacto/';?>".concat(data);
                 }
             }

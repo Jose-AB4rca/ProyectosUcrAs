@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Descriptor</title>
+    <title>Disciplinas</title>
     <link rel="stylesheet" href="../../css/styles.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
@@ -52,7 +52,7 @@
         <div class="container min-vh-100 h-100 bg-light" id="admin-cards">
             <br>
             <h2 class="text-center mb-3">Disciplinas del proyecto</h2>
-            <a class="btn ms-3" id="init"  href="<?php echo constant('URL').'proyectos/opciones/'.$val;?>">volver</a>
+            <a class="btn ms-3" id="init"  href="<?php echo constant('URL').'vistas/proyectos'.$val;?>">volver</a>
             <div class="mt-3 table-responsive text-center">          
             <table class="table display dt-responsive nowrap" id="table_id">
                 <thead>
@@ -87,7 +87,7 @@
         <script>
               function deleteDis(idp,ido) {
                 const data = [idp,ido];
-                if (confirm("Deseas borrar el objetivo especifico: ".concat(data[1]).concat(" ?"))) {
+                if (confirm("Deseas borrar disciplina: ".concat(data[1]).concat(" ?"))) {
                     location.href = "<?php echo constant('URL').'disciplinas/borrarDisciplina/';?>".concat(data);
                 }
             }

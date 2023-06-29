@@ -33,7 +33,7 @@
                 </div>
            </div>
            <div class="d-flex justify-content-end">
-           <button style="background-color: white;" type="submit" class="btn mt-4 mb-5">editar anotación</button>
+           <button style="background-color: white;" type="submit" class="btn mt-4 mb-5">editar convenio</button>
            <a style="background-color: white; margin-left: 1rem;" href="<?php echo constant('URL');?>" type="button" class="btn mt-4 mb-5">Volver</a>
            </div>  
         </form> 

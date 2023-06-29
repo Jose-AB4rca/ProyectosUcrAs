@@ -215,7 +215,7 @@ foreign key (idProyecto) references proyectos(idProyecto)
 ON DELETE CASCADE;
 
 alter table metas_objetivos_esp add constraint fk_metas_objtivos_esp
-foreign key (idMeta) references objetivo_especifico(idObjetivoEsp) 
+foreign key (idObjetivoEsp) references objetivo_especifico(idObjetivoEsp) 
 ON DELETE CASCADE;
 
 alter table unidades_relacionadas add constraint fk_unidad_rel

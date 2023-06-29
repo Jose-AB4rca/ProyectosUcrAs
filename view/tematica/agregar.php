@@ -24,7 +24,7 @@
                     </div> 
                     <div class="mb-3 mt-3">
                         <label for="Titulo" style="color: white;" class="form-label mt-2">ID Tematica:</label>
-                        <input type="number" class="form-control" id="IdTematica" name="IdTematica" placeholder="cedula">
+                        <input type="number" class="form-control" id="IdTematica" name="IdTematica" placeholder="id o codigo" required>
                     </div> 
                     <div class="mb-3 mt-3">
                         <label for="Titulo" style="color: white;" class="form-label mt-2">Descripción:</label>

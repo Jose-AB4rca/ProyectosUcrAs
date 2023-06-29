@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar</title>
+    <title>Ver</title>
     <link rel="stylesheet" href="../../css/styles.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -93,13 +93,33 @@
                         <h2 class="mt-2">Objetivos especificos</h2>   
                         <br> 
                         <?php
+                        include_once('model/metasObjetivosEspModel.php');
+                        include_once('class/metasObjetivosEspec.php');
+                        $objId = [];
                         foreach($this->obj as $row){
                             $ob = new ObjetivoEspecifico();
                             $ob = $row;
                         ?>
                         <tr>
                             <p><?php echo $ob->objetivo;?></p>
+                            <br>
+                            <p><?php
+                                $ref = new MetasObjetivosEspModel();
+                                $meta = $ref->getMetasObjetivosEspPr($ob->idObjetivoEsp);
+                                $metas = new MetaObjetivoEsp;
+                                foreach($meta as $row){
+                                    $metas->meta = $row->meta;
+                                    if(isset($metas->meta)){
+                                        echo 'Meta:  '.$metas->meta;
+                                        ?>
+                                        <br>
+                                       <?php 
+                                    }
+                                }
+                                ?>
+                            </p>
                         </tr>
+
                         <?php      
                             }
                         ?>
@@ -108,23 +128,27 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-sm-12 mt-2">
+                <div class="col-sm-4 mt-2">
                     <article class="text-break"> 
-                        <h2 class="mt-2">Metas de objetivos especificicos</h2>   
+                        <h2 class="mt-2">Anotaciones</h2>   
+                        <br> 
                         <?php
-                        foreach($this->metasO as $row){
-                            $ob = new MetaObjetivoEsp();
-                            $ob = $row;
+                        include_once('class/anotacion.php');
+                        foreach($this->anota as $row){
+                            $an = new Anotacion();
+                            $an = $row;
+
                         ?>
                         <tr>
-                            <p><?php echo $ob->meta;?></p>
+                            <p><?php echo 'Documento: '.$an->documento."  --  "." Anotación: ".$an->anotacion;?></p>
+                            <br>
                         </tr>
-                        <?php      
-                            }
+                        <?php
+                        }
                         ?>
                     </article>
                 </div>
-            </div>    
+            </div>   
             <div class="row">
                 <div class="col-sm-12 mt-2">
                     <article class="text-break">
@@ -166,6 +190,28 @@
                 </div>
             </div>
             <div class="row">
+                <div class="col-sm-4 mt-2">
+                    <article class="text-break"> 
+                        <h2 class="mt-2">Financiamiento</h2>   
+                        <br> 
+                        <?php
+                        include_once('class/financiamiento.php');
+                        foreach($this->finan as $row){
+                            $fin = new Financiamiento();
+                            $fin = $row;
+
+                        ?>
+                        <tr>
+                            <p><?php echo 'Tipo: '.$fin->tipo."  --  "." Descripción: ".$fin->descripcion;?></p>
+                            <br>
+                        </tr>
+                        <?php
+                        }
+                        ?>
+                    </article>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-sm-12 mt-2">
                     <article class="text-break"> 
                         <h2 class="mt-2">Comentarios</h2>   
@@ -178,37 +224,20 @@
             <div class="row">
                 <div class="col-sm-12 mt-2">
                     <article class="text-break"> 
-                        <h2 class="mt-2">Area de impacto</h2>   
+                        <h2 class="mt-2">Impactos</h2>   
                         <?php
-                        foreach($this->areaI as $row){
-                            $ob = new AreaImpacto();
+                        include_once('class/impactoBeneficio.php');
+                        foreach($this->impactoB as $row){
+                            $ob = new ImpactoBeneficio();
                             $ob = $row;
                         ?>
                         <tr>
-                            <p><?php echo $ob->area;?></p>
+                            <p><?php echo 'Población: '.$ob->poblacion. " --  "." Cantidad: ".$ob->cantPoblacion."   --  "." beneficio:  ".$ob->beneficioPoblacion;?></p>
                         </tr>
                         <?php      
                             }
                         ?>
                     </article> 
-                </div>
-            </div>    
-            <div class="row">
-                <div class="col-sm-12 mt-2">
-                    <article class="text-break"> 
-                        <h2 class="mt-2">Anotaciones</h2>   
-                        <?php
-                        foreach($this->anota as $row){
-                            $ob = new Anotacion();
-                            $ob = $row;
-                        ?>
-                        <tr>
-                            <p><?php echo $ob->anotacion;?></p>
-                        </tr>
-                        <?php      
-                            }
-                        ?>
-                    </article>
                 </div>
             </div>    
      </div>

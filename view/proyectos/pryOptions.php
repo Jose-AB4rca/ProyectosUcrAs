@@ -198,8 +198,8 @@
                         <div class="container mt-3 d-flex flex-column h-100 align-items-center justify-content-center">
                             <h3 class="mt-1">Temática</h3>
                             <div class="d-flex">
-                            <a class="btn mt-auto mb-4 fa fa-plus" title="Agregar nuevo" id="init"  href="<?php echo constant('URL').'tematicas/listaEspecifica/'.$this->item->idProyecto;?>"></a>
-                            <a class="btn mt-auto mb-4" id="init" title="Editar" href="<?php echo constant('URL').'tematicas/agregar/'.$this->item->idProyecto;?>"><i class="fa fa-edit"></i></a>
+                            <a class="btn mt-auto mb-4 fa fa-plus" title="Agregar nuevo" id="init"  href="<?php echo constant('URL').'tematicas/agregar/'.$this->item->idProyecto;?>"></a>
+                            <a class="btn mt-auto mb-4" id="init" title="Editar" href="<?php echo constant('URL').'tematicas/listaEspecifica/'.$this->item->idProyecto;?>"><i class="fa fa-edit"></i></a>
                             </div>
                         </div>
                     </div>

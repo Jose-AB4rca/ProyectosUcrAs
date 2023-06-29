@@ -44,8 +44,9 @@
                         <td>
                         <a name="eliminar" id="eliminar" class="btn btn-info m-1" href="<?php echo constant('URL').'proyectos/ver/'.$pry->idProyecto; ?>" role="button">Ver</a>    
                         <a name="editar" id="editar" class="btn btn-warning m-1" href="<?php echo constant('URL').'proyectos/editar/'.$pry->idProyecto; ?>" role="button">Actualizar</a>
-                        <a name="editar" id="editar" class="btn btn-success m-1" href="<?php echo constant('URL').'proyectos/opciones/'.$pry->idProyecto; ?>" role="button">Agregar datos</a></td>
-                        
+                        <a name="editar" id="editar" class="btn btn-success m-1" href="<?php echo constant('URL').'proyectos/opciones/'.$pry->idProyecto; ?>" role="button">Agregar datos</a>
+                        <a name="editar" id="editar" class="btn btn-danger m-1" href="<?php echo constant('URL').'proyectos/eliminarProyecto/'.$pry->idProyecto; ?>" role="button">Elminar</a>
+                        </td>
                     </tr>
                 <?php      
                     }

@@ -80,11 +80,11 @@ class anotacionesModel extends Model{
         }
     }
 
-    function getAnotacionesProyecto($param = null){
+    function getAnotacionesProyecto($id){
         $items = [];
         try{
             $sql = $this->db->connect()->prepare('SELECT * FROM `anotaciones`WHERE `idProyecto` = :Id');
-            $sql->execute(['Id'=>$param[0]]);
+            $sql->execute(['Id'=>$id]);
             while($row = $sql->fetch()){
                 $ant = new Anotacion();
                 $ant->idAnotacion   = $row['idAnotacion'];

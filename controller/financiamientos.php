@@ -89,11 +89,11 @@ class Financiamientos extends Controller{
         $idp = $par[$val];
         $ido = $par[$valOb];
         if($this->model->deleteFinanciamiento($idp,$ido)){    
-            $mjs = "Actualizado";  
+            $mjs = "Borrado";  
             header("Location: http://localhost/ProyectosUcrAs/financiamientos/listaEspecifica/".$idp."?ms=$mjs"); 
             exit();  
         }else{          
-            $mjs = "Actualizado";  
+            $mjs = "No borrado";  
             header("Location: http://localhost/ProyectosUcrAs/financiamientos/listaEspecifica/".$idp."?ms=$mjs"); 
             exit();  
         }

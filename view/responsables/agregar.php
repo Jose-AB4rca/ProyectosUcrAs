@@ -24,7 +24,7 @@
                     </div> 
                     <div class="mb-3 mt-3">
                         <label for="Titulo" style="color: white;" class="form-label mt-2">ID responsable:</label>
-                        <input type="number" class="form-control" id="IdResponsable" name="IdResponsable" placeholder="cedula">
+                        <input type="number" class="form-control" id="IdResponsable" name="IdResponsable" placeholder="cedula" required>
                     </div> 
                     <div class="mb-3 mt-3">
                         <label for="Titulo" style="color: white;" class="form-label mt-2">Responsable:</label>

@@ -87,8 +87,8 @@
         <script>
               function deleteDes(idp,ido) {
                 const data = [idp,ido];
-                if (confirm("Deseas borrar el objetivo especifico: ".concat(data[1]).concat(" ?"))) {
-                    location.href = "<?php echo constant('URL').'cronogramas/borrarCronograma/';?>".concat(data);
+                if (confirm("Deseas borrar el descriptor: ".concat(data[1]).concat(" ?"))) {
+                    location.href = "<?php echo constant('URL').'descriptores/borrarDescriptor/';?>".concat(data);
                 }
             }
         </script>

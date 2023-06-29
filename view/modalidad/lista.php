@@ -78,7 +78,7 @@
         <script>
               function deletefina(idp,ido) {
                 const data = [idp,ido];
-                if (confirm("Deseas borrar el impacto: ".concat(data[1]).concat(" ?"))) {
+                if (confirm("Deseas borrar modalidad: ".concat(data[1]).concat(" ?"))) {
                     location.href = "<?php echo constant('URL').'modalidades/borrarModalidad/';?>".concat(data);
                 }
             }

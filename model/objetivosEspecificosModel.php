@@ -81,11 +81,11 @@ class ObjetivosEspecificosModel extends Model{
               return [];
         }
     }
-    function getPryObjetivosEsp($param = null){
+    function getPryObjetivosEsp($id){
         $items = [];
         try{
             $sql = $this->db->connect()->prepare('SELECT * FROM `objetivo_especifico` WHERE `idProyecto`=:IdProyecto');            
-            $sql->execute(['IdProyecto'=>$param[0]]);
+            $sql->execute(['IdProyecto'=>$id]);
             $obj = new ObjetivoEspecifico();
             while($row = $sql->fetch()){
                 $obj = new ObjetivoEspecifico();

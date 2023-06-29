@@ -15,7 +15,7 @@
     style="background-image: url('../img/white-abstract.jpg');">
     <div class="row col-sm-10 bg-primary mb-5 mt-4 h-50">
         <form action="<?php echo constant('URL').'cronogramas/editarCronograma';?>" method="post" style="text-align: center;">
-           <h1 class="mt-3" style="color: white;">Añadir cronograma</h1>
+           <h1 class="mt-3" style="color: white;">Editar cronograma</h1>
            <div class="row justify-content-center">
                 <div class="col-sm-6">
                     <div class="mb-3 mt-3">
